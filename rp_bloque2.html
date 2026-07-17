@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque II · Tipos de problemas y sentidos matemáticos</title>
+<style>
+  :root{
+    --ink:#1c1a17; --paper:#f6f2ea; --rule:#d9d0bf;
+    --accent:#1f6e5c; --accent2:#a8462f; --muted:#6b6258; --card:#fffdf9;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Iowan Old Style',serif;line-height:1.65;}
+  .sans{font-family:'Helvetica Neue',Arial,sans-serif;}
+  a{color:var(--accent);}
+  nav.top{position:sticky;top:0;z-index:30;background:rgba(246,242,234,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);padding:10px 16px;font-family:'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;}
+  nav.top a{text-decoration:none;color:var(--muted);}
+  nav.top .crumb b{color:var(--ink);}
+  .progress-wrap{height:3px;background:var(--rule);position:sticky;top:39px;z-index:29;}
+  .progress-bar{height:100%;background:var(--accent2);width:0%;transition:width .1s linear;}
+  .layout{max-width:920px;margin:0 auto;display:flex;gap:0;align-items:flex-start;padding:0 16px;}
+  aside{width:200px;flex-shrink:0;position:sticky;top:60px;padding:26px 14px 26px 0;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;display:none;}
+  @media(min-width:760px){aside{display:block;}}
+  aside h5{text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;color:var(--accent2);margin:0 0 8px;}
+  aside ul{list-style:none;padding:0;margin:0 0 20px;}
+  aside li{margin-bottom:7px;}
+  aside a{color:var(--muted);text-decoration:none;}
+  aside a:hover{color:var(--accent);}
+  main{flex:1;min-width:0;padding:26px 0 70px;max-width:680px;}
+  .block-head{margin-bottom:28px;}
+  .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent2);font-weight:700;}
+  .block-head h1{font-size:1.7rem;margin:8px 0 12px;}
+  .block-head h1 em{color:var(--accent);font-style:italic;}
+  .block-head p{color:var(--muted);font-size:.97rem;max-width:58ch;}
+  .tags{display:flex;gap:14px;flex-wrap:wrap;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.78rem;color:var(--muted);margin-top:14px;}
+  .tema-eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent);font-weight:700;margin-top:46px;}
+  h2{font-size:1.4rem;margin:6px 0 4px;}
+  h3{font-size:1.12rem;margin:26px 0 10px;color:var(--ink);}
+  h4{font-size:1rem;margin:20px 0 8px;}
+  p{margin:0 0 14px;}
+  strong{color:var(--ink);}
+  .box{border:1px solid var(--rule);background:var(--card);padding:14px 16px;margin:18px 0;border-radius:2px;}
+  .box.definition{border-left:3px solid var(--accent);}
+  .box.definition .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px;}
+  .box.practice{background:#eef3ee;border-left:3px solid var(--accent);}
+  .box.practice .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .box.activity{background:#f1ece1;border-left:3px solid var(--accent2);}
+  .box.activity .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+  .myth-pair{display:flex;flex-direction:column;gap:10px;margin:18px 0;}
+  .myth{border:1px solid var(--rule);padding:12px 14px;border-radius:2px;}
+  .myth.x{background:#f7e9e5;}
+  .myth.check{background:#e8f0e9;}
+  .myth .tag{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .myth.x .tag{color:var(--accent2);}
+  .myth.check .tag{color:var(--accent);}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.85rem;font-family:'Helvetica Neue',Arial,sans-serif;}
+  th,td{border:1px solid var(--rule);padding:7px 9px;text-align:left;vertical-align:top;}
+  th{background:#efe9db;font-weight:700;}
+  blockquote{font-style:italic;border-left:3px solid var(--accent2);padding-left:16px;margin:20px 0;color:var(--ink);}
+  .for-you{background:#fbf7ee;border:1px dashed var(--accent2);padding:14px 16px;margin:24px 0;border-radius:2px;}
+  .for-you .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+  hr{border:none;border-top:1px solid var(--rule);margin:40px 0;}
+  .biblio h3{margin-top:30px;}
+  .ref{margin:0 0 14px;font-size:.92rem;}
+  .ref .star{color:var(--accent2);}
+  .ref .meta{display:block;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;color:var(--muted);margin-top:3px;}
+  .block-nav{display:flex;justify-content:space-between;margin-top:50px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.85rem;}
+  .block-nav a{text-decoration:none;color:var(--accent2);}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="rp_index.html">← IAprendizaje</a>
+  <span class="crumb">Bloque <b>II</b> de IV</span>
+</nav>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="layout">
+  <aside>
+    <h5>Unidad 2</h5>
+    <ul>
+      <li><a href="#t2-1">2.1 Por qué clasificar problemas</a></li>
+      <li><a href="#t2-2">2.2 Rutinarios y no rutinarios</a></li>
+      <li><a href="#t2-3">2.3 Cerrados, abiertos y de proceso</a></li>
+      <li><a href="#t2-4">2.4 Estructura semántica</a></li>
+    </ul>
+    <h5>Unidad 3</h5>
+    <ul>
+      <li><a href="#t3-1">3.1 Qué son los sentidos</a></li>
+      <li><a href="#t3-2">3.2 Los seis sentidos</a></li>
+      <li><a href="#t3-3">3.3 El sentido socioafectivo</a></li>
+      <li><a href="#t3-4">3.4 Diseñar para varios sentidos</a></li>
+    </ul>
+    <h5>Curso</h5>
+    <ul>
+      <li><a href="rp_bloque1.html">← Bloque I</a></li>
+      <li><a href="rp_bloque3.html">Bloque III →</a></li>
+      <li><a href="rp_bloque4.html">Bloque IV →</a></li>
+      <li><a href="rp_taller.html">Taller práctico →</a></li>
+    </ul>
+  </aside>
+
+  <main id="top">
+    <div class="block-head">
+      <div class="eyebrow">Bloque II · Resolución de Problemas Matemáticos</div>
+      <h1>Una taxonomía útil, y los <em>seis sentidos</em> que se activan al resolver</h1>
+      <p>No todos los problemas entrenan lo mismo. Conocer su tipología te permite variar de verdad la dieta de tu aula; y conocer los sentidos matemáticos te permite ver qué parte del pensamiento se está poniendo en juego en cada uno.</p>
+      <div class="tags"><span>📖 2 unidades</span><span>🧮 Taxonomía + sentidos</span><span>🎒 Enfoque de aula</span></div>
+    </div>
+
+    <div class="tema-eyebrow">Tema 1 · Unidad 2</div>
+    <h2 id="t2-1">2.1 Por qué necesitamos clasificar los problemas</h2>
+    <p>Si en el Bloque I se estableció que un problema implica un obstáculo, ahora hace falta dar un paso más: no todos los obstáculos son del mismo tipo, y un aula que solo trabaja un tipo de problema —por cómodo o por costumbre— deja sin entrenar partes enteras del pensamiento matemático. Clasificar problemas no es un ejercicio académico: es una herramienta de planificación. Permite auditar qué tipo de obstáculo has ofrecido a tu clase esta semana, este trimestre, este curso.</p>
+
+    <h2 id="t2-2">2.2 Problemas rutinarios y no rutinarios</h2>
+    <p>La distinción más operativa para el aula de primaria es la que separa problemas <strong>rutinarios</strong> de <strong>no rutinarios</strong>. Un problema rutinario se resuelve aplicando un procedimiento que el alumno ya ha practicado, aunque tenga que decidir cuál usar; uno no rutinario exige construir una estrategia nueva, combinando procedimientos conocidos de una forma que el alumno no ha visto antes.</p>
+
+    <div class="box definition">
+      <div class="label">Distinción clave</div>
+      <strong>Rutinario:</strong> el alumno reconoce la familia de problema y aplica una estrategia ya consolidada. <strong>No rutinario:</strong> el alumno tiene que inventar o adaptar una estrategia, a menudo combinando ensayo-error, representación gráfica y tanteo organizado.
+    </div>
+
+    <p>El error pedagógico más frecuente es agotar la sesión de «resolución de problemas» en problemas rutinarios disfrazados de no rutinarios: el enunciado parece nuevo, pero la estructura es idéntica a la de la página anterior del libro. Los alumnos terminan reconociendo el patrón superficial sin desarrollar flexibilidad real.</p>
+
+    <h2 id="t2-3">2.3 Problemas cerrados, abiertos y de proceso</h2>
+    <table>
+      <tr><th>Tipo</th><th>Característica</th><th>Ejemplo</th></tr>
+      <tr><td><strong>Cerrado</strong></td><td>Una única respuesta correcta, un camino más o menos definido</td><td>«¿Cuántas patas tienen 7 arañas?»</td></tr>
+      <tr><td><strong>Abierto</strong></td><td>Varias respuestas válidas, o varios caminos igualmente legítimos</td><td>«Reparte 24 caramelos entre tus amigos de la forma que te parezca más justa. Explica por qué.»</td></tr>
+      <tr><td><strong>De proceso</strong></td><td>El valor está en el camino, no en el resultado; a veces no hay una respuesta numérica final</td><td>«Encuentra todas las formas de formar 1 € con monedas de 5, 10 y 20 céntimos.»</td></tr>
+    </table>
+    <p>Los problemas abiertos y de proceso son los grandes ausentes en muchas aulas, precisamente porque son más difíciles de corregir con rapidez: no hay una única respuesta que marcar como correcta. Pero son también los que mejor entrenan la justificación, la comparación de estrategias entre compañeros y la tolerancia a la incertidumbre —habilidades centrales del sentido socioafectivo que se desarrolla en el apartado 3.3.</p>
+
+    <div class="box practice">
+      <div class="label">Para tu práctica docente</div>
+      Una vez por semana, sustituye un problema cerrado del libro por una versión abierta del mismo: en vez de preguntar «¿cuántos quedan?», pregunta «¿de cuántas formas distintas se puede llegar a esta cantidad?». El contenido matemático puede ser idéntico; el tipo de pensamiento que exige, no.
+    </div>
+
+    <h2 id="t2-4">2.4 Estructura semántica de los problemas aritméticos</h2>
+    <p>Para los problemas de suma y resta en los primeros cursos, la investigación clásica de Carpenter y Moser identificó cuatro estructuras semánticas que conviene conocer porque tienen distinto grado de dificultad, aunque usen la misma operación:</p>
+    <table>
+      <tr><th>Estructura</th><th>Qué ocurre</th><th>Ejemplo</th></tr>
+      <tr><td><strong>Cambio</strong></td><td>Una cantidad inicial se transforma (aumenta o disminuye)</td><td>«Tenía 8 cromos, gané 5. ¿Cuántos tengo?»</td></tr>
+      <tr><td><strong>Combinación</strong></td><td>Dos cantidades se unen en un total, sin transformación temporal</td><td>«Hay 8 niños y 5 niñas. ¿Cuántos alumnos hay?»</td></tr>
+      <tr><td><strong>Comparación</strong></td><td>Se compara una cantidad con otra</td><td>«Ana tiene 8 cromos, Luis tiene 5 menos. ¿Cuántos tiene Luis?»</td></tr>
+      <tr><td><strong>Igualación</strong></td><td>Se pregunta cuánto falta para igualar dos cantidades</td><td>«Ana tiene 8 cromos, Luis tiene 5. ¿Cuántos le faltan a Luis para tener los mismos?»</td></tr>
+    </table>
+    <p>Los problemas de comparación e igualación son sistemáticamente más difíciles que los de cambio y combinación, incluso usando los mismos números, porque exigen representar mentalmente una relación entre cantidades, no solo una cantidad que se transforma. Saber esto te permite secuenciar mejor las dificultades en lugar de asumir que «todos los problemas de restar» tienen el mismo nivel.</p>
+
+    <hr>
+
+    <div class="tema-eyebrow">Tema 2 · Unidad 3</div>
+    <h2 id="t3-1">3.1 Qué son los sentidos matemáticos</h2>
+    <p>El currículo de Educación Primaria derivado de la LOMLOE introduce un cambio de lenguaje importante: ya no se habla solo de «bloques de contenido» (números, geometría, medida...) sino de <strong>sentidos matemáticos</strong>, entendidos como formas de pensar y actuar matemáticamente que se desarrollan de manera transversal a lo largo de toda la etapa. Un problema rara vez activa un solo sentido: lo habitual es que combine varios.</p>
+
+    <div class="box definition">
+      <div class="label">Distinción clave</div>
+      Un <strong>sentido matemático</strong> no es un tema del temario, es una forma de comprensión que se construye con el tiempo y que se manifiesta en la capacidad de usar el conocimiento matemático de forma flexible, funcional y con criterio propio —no solo de ejecutar procedimientos correctamente.
+    </div>
+
+    <h2 id="t3-2">3.2 Los seis sentidos del currículo</h2>
+    <table>
+      <tr><th>Sentido</th><th>Qué implica</th><th>Se activa al resolver…</th></tr>
+      <tr><td><strong>Numérico</strong></td><td>Comprender, representar y operar con cantidades con flexibilidad</td><td>Problemas de cálculo, estimación, reparto</td>
+      </tr>
+      <tr><td><strong>De la medida</strong></td><td>Cuantificar magnitudes (longitud, masa, tiempo, dinero) y manejar unidades</td><td>Problemas con conversión de unidades, estimaciones de magnitud</td></tr>
+      <tr><td><strong>Espacial</strong></td><td>Razonar sobre formas, posiciones y transformaciones geométricas</td><td>Problemas de localización, simetría, construcción</td></tr>
+      <tr><td><strong>Algebraico</strong></td><td>Identificar patrones, relaciones y generalizar</td><td>Problemas de regularidades, secuencias, igualdades</td></tr>
+      <tr><td><strong>Estocástico</strong></td><td>Razonar con incertidumbre: datos, azar y probabilidad</td><td>Problemas de recuento de posibilidades, interpretación de gráficos</td></tr>
+      <tr><td><strong>Socioafectivo</strong></td><td>Vivir las matemáticas con una actitud positiva, cooperar, gestionar el error y la frustración</td><td>Cualquier problema, especialmente los abiertos y de proceso</td></tr>
+    </table>
+
+    <p>Los cinco primeros sentidos son relativamente fáciles de identificar porque se corresponden, a grandes rasgos, con los antiguos bloques de contenido. El sexto —el socioafectivo— es la novedad más relevante del marco curricular actual, y también el más difícil de planificar porque no se enseña con un algoritmo: se cultiva con el clima de aula y con el tipo de tarea que se propone.</p>
+
+    <h2 id="t3-3">3.3 El sentido socioafectivo: por qué importa especialmente</h2>
+    <p>El sentido socioafectivo recoge algo que el aula de matemáticas ha ignorado tradicionalmente: la relación emocional que el alumno construye con la disciplina. La ansiedad matemática —un miedo específico y medible ante las tareas numéricas— afecta a una proporción significativa del alumnado de primaria, y una vez instalada predice peor rendimiento independientemente de la capacidad real del alumno.</p>
+
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>El sentido socioafectivo es «lo blando»: importa menos que saber calcular bien.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>Un alumno con ansiedad matemática alta rinde peor que uno con menos ansiedad y la misma capacidad de partida. El componente emocional no es accesorio: condiciona directamente el rendimiento cognitivo.</div>
+    </div>
+
+    <p>Trabajar este sentido implica decisiones concretas: normalizar el error como parte del proceso, dar tiempo de pensamiento individual antes de la puesta en común (para que quien necesita más tiempo no se sienta «lento»), y valorar explícitamente la estrategia y el razonamiento, no solo el resultado final.</p>
+
+    <div class="box practice">
+      <div class="label">Para tu práctica docente</div>
+      Después de un problema abierto, antes de pedir la respuesta, pregunta: «¿quién se ha quedado atascado en algún momento, y qué ha hecho para seguir?». Normalizar el atasco como parte visible y comentable del proceso es la intervención más directa sobre el sentido socioafectivo.
+    </div>
+
+    <h2 id="t3-4">3.4 Diseñar un problema que active varios sentidos</h2>
+    <p>Un buen problema rara vez se limita a un sentido. Tomemos un ejemplo: «La clase quiere organizar el patio de recreo con tres zonas de juego. Tenéis 200 m² y tenéis que decidir cuánto espacio dais a cada zona, dibujar el plano y explicar por qué lo habéis repartido así.» Este enunciado activa el sentido de la medida (superficie), el espacial (plano, proporciones), el algebraico (relación entre las partes y el total) y el socioafectivo (decisión consensuada, justificación, gestión del desacuerdo en el grupo).</p>
+
+    <div class="box activity">
+      <div class="label">Actividad de aula · Auditoría de sentidos</div>
+      Coge un problema que ya uses en tu programación. Marca qué sentidos activa de la tabla 3.2. Si activa uno o dos como mucho, modifica ligeramente el enunciado (añade una decisión, una justificación, una representación gráfica) para sumar al menos un sentido más sin cambiar el contenido matemático de fondo.
+    </div>
+
+    <div class="for-you">
+      <div class="label">Para tu práctica docente</div>
+      No necesitas un problema distinto para cada sentido cada día. Necesitas, a lo largo de un trimestre, revisar que los seis han aparecido al menos varias veces. Llevar un registro sencillo (una casilla por sentido, una marca cada vez que aparece en una tarea) te da, en cuatro semanas, un mapa real de lo que tu aula está entrenando.
+    </div>
+
+    <hr>
+
+    <div class="biblio">
+      <h2>Bibliografía y textos de consulta</h2>
+      <p>Referencias seleccionadas para profundizar en la tipología de problemas y en el marco de los sentidos matemáticos.</p>
+
+      <h3>Tipología de problemas</h3>
+      <p class="ref"><span class="star">★</span><strong>Carpenter, T. P. y Moser, J. M. (1984).</strong> <em>The acquisition of addition and subtraction concepts in grades one through three.</em> Journal for Research in Mathematics Education, 15(3), 179-202. El estudio de referencia sobre las estructuras semánticas de cambio, combinación, comparación e igualación.<span class="meta">Nivel: académico. En inglés.</span></p>
+      <p class="ref"><span class="star">★</span><strong>Puig, L. y Cerdán, F. (1988).</strong> <em>Problemas aritméticos escolares.</em> Síntesis. Tipología detallada y muy aplicable en español, con ejemplos de aula.<span class="meta">Nivel: intermedio. En español.</span></p>
+      <p class="ref"><strong>Castro, E. (Ed.) (2001).</strong> <em>Didáctica de la matemática en la Educación Primaria.</em> Síntesis. Capítulo dedicado a la resolución de problemas con tipología amplia y ejemplos por ciclo.<span class="meta">Nivel: introductorio-intermedio. En español.</span></p>
+
+      <h3>Sentidos matemáticos y currículo</h3>
+      <p class="ref"><span class="star">★</span><strong>Ministerio de Educación y Formación Profesional (2022).</strong> <em>Real Decreto 157/2022, currículo de Educación Primaria.</em> BOE. Define oficialmente los seis sentidos matemáticos. Lectura imprescindible.<span class="meta">Nivel: normativo. En español.</span></p>
+      <p class="ref"><strong>Junta de Castilla y León (2022).</strong> <em>Decreto 38/2022, currículo de Educación Primaria en Castilla y León.</em> BOCYL. Concreción autonómica de los sentidos matemáticos y los criterios de evaluación asociados.<span class="meta">Nivel: normativo. En español.</span></p>
+
+      <h3>Ansiedad matemática y sentido socioafectivo</h3>
+      <p class="ref"><span class="star">★</span><strong>Boaler, J. (2016).</strong> <em>Mentalidades matemáticas.</em> Narcea. Sobre la relación entre creencias, emoción y aprendizaje matemático, con propuestas de aula concretas.<span class="meta">Nivel: introductorio. Disponible en español.</span></p>
+      <p class="ref"><strong>Ashcraft, M. H. (2002).</strong> <em>Math anxiety: Personal, educational, and cognitive consequences.</em> Current Directions in Psychological Science, 11(5), 181-185. Síntesis clásica sobre el efecto de la ansiedad matemática en el rendimiento.<span class="meta">Nivel: académico. En inglés.</span></p>
+    </div>
+
+    <div class="block-nav">
+      <a href="rp_bloque1.html">← Bloque I · Qué es un problema</a>
+      <a href="rp_bloque3.html">Bloque III · Recursos y competencias →</a>
+    </div>
+  </main>
+</div>
+
+<script>
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    document.getElementById('progressBar').style.width = p + '%';
+  });
+</script>
+</body>
+</html>

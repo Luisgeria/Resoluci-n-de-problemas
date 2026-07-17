@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller práctico · Banco de problemas y autoevaluación final</title>
+<style>
+  :root{--ink:#1c1a17;--paper:#f6f2ea;--rule:#d9d0bf;--accent:#1f6e5c;--accent2:#a8462f;--muted:#6b6258;--card:#fffdf9;--ok:#1f6e5c;--bad:#a8462f;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Iowan Old Style',serif;line-height:1.6;}
+  .sans{font-family:'Helvetica Neue',Arial,sans-serif;}
+  a{color:var(--accent);}
+  nav.top{position:sticky;top:0;z-index:30;background:rgba(246,242,234,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);padding:10px 16px;font-family:'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;}
+  nav.top a{text-decoration:none;color:var(--muted);}
+  nav.top .crumb b{color:var(--ink);}
+  main{max-width:760px;margin:0 auto;padding:30px 16px 80px;}
+  .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent2);font-weight:700;}
+  h1{font-size:1.7rem;margin:8px 0 12px;}
+  h1 em{font-style:italic;color:var(--accent);}
+  main > p.lead{color:var(--muted);font-size:.97rem;max-width:60ch;margin:0 0 24px;}
+  h2{font-size:1.35rem;margin:46px 0 14px;}
+  .section-label{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent2);font-weight:700;margin-top:46px;}
+
+  /* filtros */
+  .filters{display:flex;flex-direction:column;gap:10px;margin:18px 0 26px;font-family:'Helvetica Neue',Arial,sans-serif;}
+  .filter-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .filter-row .fl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;width:100%;margin-bottom:2px;}
+  .chip{
+    border:1px solid var(--rule);background:#fff;color:var(--muted);
+    font-size:.78rem;padding:5px 11px;border-radius:14px;cursor:pointer;
+    user-select:none;
+  }
+  .chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .chip.active.s{background:var(--accent2);border-color:var(--accent2);}
+
+  .count-line{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;color:var(--muted);margin-bottom:16px;}
+
+  .ficha{
+    border:1px solid var(--rule);background:var(--card);border-radius:2px;
+    padding:18px 20px;margin-bottom:14px;
+  }
+  .ficha .meta{display:flex;gap:8px;flex-wrap:wrap;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.7rem;margin-bottom:8px;}
+  .ficha .meta span{padding:2px 8px;border-radius:10px;background:#efe9db;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .ficha .meta .ciclo{background:#e3ece6;color:var(--accent);}
+  .ficha .meta .sentido{background:#f3e4dd;color:var(--accent2);}
+  .ficha h3{margin:0 0 8px;font-size:1.08rem;}
+  .ficha p{margin:0 0 8px;font-size:.94rem;}
+  .ficha .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.72rem;text-transform:uppercase;color:var(--muted);}
+  .ficha details{margin-top:8px;font-size:.88rem;}
+  .ficha summary{cursor:pointer;color:var(--accent);font-family:'Helvetica Neue',Arial,sans-serif;font-size:.82rem;}
+
+  /* quiz */
+  .quiz-intro{background:#f1ece1;border:1px solid var(--rule);padding:16px 18px;border-radius:2px;margin-bottom:22px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.88rem;color:var(--muted);}
+  .q-block-label{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:.7rem;color:var(--accent2);font-weight:700;margin:30px 0 4px;}
+  .question{border:1px solid var(--rule);background:var(--card);border-radius:2px;padding:16px 18px;margin-bottom:14px;}
+  .question p.qtext{font-weight:600;margin:0 0 12px;font-size:.97rem;}
+  .opt{display:block;border:1px solid var(--rule);border-radius:2px;padding:9px 12px;margin-bottom:7px;cursor:pointer;font-size:.9rem;font-family:'Helvetica Neue',Arial,sans-serif;}
+  .opt input{margin-right:8px;}
+  .opt.correct-mark{border-color:var(--ok);background:#e8f0e9;}
+  .opt.wrong-mark{border-color:var(--bad);background:#f7e9e5;}
+  .feedback{display:none;margin-top:8px;padding:9px 12px;border-radius:2px;font-size:.85rem;font-family:'Helvetica Neue',Arial,sans-serif;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:#e8f0e9;color:#163f34;}
+  .feedback.bad{background:#f7e9e5;color:#6b2418;}
+
+  .quiz-actions{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--rule);padding:14px 0;margin-top:30px;display:flex;justify-content:space-between;align-items:center;font-family:'Helvetica Neue',Arial,sans-serif;}
+  #checkBtn{background:var(--accent);color:#fff;border:none;padding:11px 22px;border-radius:3px;font-size:.92rem;cursor:pointer;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:600;}
+  #scoreText{font-size:.85rem;color:var(--muted);}
+
+  .block-nav{display:flex;justify-content:space-between;margin-top:50px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.85rem;}
+  .block-nav a{text-decoration:none;color:var(--accent2);}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="rp_index.html">← IAprendizaje</a>
+  <span class="crumb">Taller práctico</span>
+</nav>
+
+<main>
+  <div class="eyebrow">Taller · Resolución de Problemas Matemáticos</div>
+  <h1>El banco de problemas, y el <em>cierre del curso</em></h1>
+  <p class="lead">18 fichas listas para usar en el aula, filtrables por ciclo y por sentido matemático, y la autoevaluación final del curso: 40 preguntas con feedback razonado sobre los cuatro bloques.</p>
+
+  <div class="section-label">Banco de problemas</div>
+  <h2>18 fichas, filtra por ciclo y sentido</h2>
+
+  <div class="filters">
+    <div class="filter-row">
+      <div class="fl">Ciclo</div>
+      <span class="chip active" data-type="ciclo" data-value="all">Todos</span>
+      <span class="chip" data-type="ciclo" data-value="1-2">1º-2º</span>
+      <span class="chip" data-type="ciclo" data-value="3-4">3º-4º</span>
+      <span class="chip" data-type="ciclo" data-value="5-6">5º-6º</span>
+    </div>
+    <div class="filter-row">
+      <div class="fl">Sentido matemático</div>
+      <span class="chip s active" data-type="sentido" data-value="all">Todos</span>
+      <span class="chip s" data-type="sentido" data-value="numerico">Numérico</span>
+      <span class="chip s" data-type="sentido" data-value="medida">Medida</span>
+      <span class="chip s" data-type="sentido" data-value="espacial">Espacial</span>
+      <span class="chip s" data-type="sentido" data-value="algebraico">Algebraico</span>
+      <span class="chip s" data-type="sentido" data-value="estocastico">Estocástico</span>
+      <span class="chip s" data-type="sentido" data-value="socioafectivo">Socioafectivo</span>
+    </div>
+  </div>
+
+  <div class="count-line"><span id="countText">18 fichas</span></div>
+
+  <div id="fichasContainer"></div>
+
+  <div class="section-label">Cierre del curso</div>
+  <h2>Autoevaluación final · 40 preguntas</h2>
+  <div class="quiz-intro">10 preguntas por bloque. Marca una opción en cada pregunta y pulsa «Comprobar respuestas» al final. Cada opción tiene su propia explicación, sea correcta o incorrecta: no es un examen, es una herramienta para repasar lo trabajado en el curso.</div>
+
+  <div id="quizContainer"></div>
+
+  <div class="quiz-actions">
+    <button id="checkBtn">Comprobar respuestas</button>
+    <span id="scoreText"></span>
+  </div>
+
+  <div class="block-nav">
+    <a href="rp_bloque4.html">← Bloque IV · Aulas para pensar y evaluación</a>
+    <a href="rp_index.html">Volver al inicio →</a>
+  </div>
+</main>
+
+<script>
+/* ===================== FICHAS ===================== */
+const fichas = [
+  {ciclo:"1-2", sentido:"numerico", titulo:"La caja de los botones", obj:"Reparto equitativo y resto", enun:"Tenemos 17 botones para repartir entre 4 estuches, a partes iguales. ¿Cuántos botones le tocan a cada estuche? ¿Sobra alguno?", pista:"Usa material manipulativo (botones reales o fichas) y deja que los alumnos repartan físicamente antes de escribir ninguna operación."},
+  {ciclo:"1-2", sentido:"medida", titulo:"¿Cuánto mide la clase?", obj:"Estimación y medida con unidades no convencionales", enun:"Sin usar una regla, estima cuántos «pies» (pisadas talón-punta) mide de largo la clase. Luego compruébalo midiendo de verdad.", pista:"Compara las estimaciones de varios alumnos antes de medir: la diferencia entre estimación y medida real es el contenido más valioso de la actividad."},
+  {ciclo:"1-2", sentido:"espacial", titulo:"El camino del ratón", obj:"Lateralidad y secuencias de movimiento", enun:"Dibuja en una cuadrícula el camino más corto que puede seguir un ratón desde la esquina inferior izquierda hasta un trozo de queso en la esquina superior derecha, moviéndose solo hacia arriba o hacia la derecha.", pista:"Pide que cuenten cuántos caminos distintos de la misma longitud existen, no solo uno."},
+  {ciclo:"1-2", sentido:"algebraico", titulo:"La fila de las pegatinas", obj:"Identificar y continuar un patrón", enun:"Esta fila de pegatinas sigue un patrón: estrella, estrella, círculo, estrella, estrella, círculo… ¿Qué pegatina va en la posición 10? Explica cómo lo sabes sin dibujar las diez.", pista:"Anima a buscar un atajo (cada 3 se repite) en lugar de dibujar las diez posiciones una a una."},
+  {ciclo:"1-2", sentido:"estocastico", titulo:"La bolsa de canicas", obj:"Nociones básicas de probabilidad", enun:"En una bolsa hay 4 canicas rojas y 1 azul. Si sacas una sin mirar, ¿es más probable que salga roja o azul? ¿Por qué?", pista:"Haz el experimento real varias veces y anota los resultados antes de pedir la explicación teórica."},
+  {ciclo:"1-2", sentido:"socioafectivo", titulo:"El reparto justo", obj:"Justificación oral y gestión del desacuerdo", enun:"Tenéis 10 caramelos para repartir entre 3 amigos que han trabajado distinto tiempo en una tarea. Decidid en grupo cómo repartirlos «de forma justa» y explicad vuestro criterio al resto de la clase.", pista:"No hay una única respuesta correcta: el objetivo es que defiendan su criterio y escuchen otros distintos sin que nadie se sienta «equivocado»."},
+
+  {ciclo:"3-4", sentido:"numerico", titulo:"La excursión del cole", obj:"Cálculo con varios pasos y estimación de coste", enun:"180 alumnos van de excursión. Cada autobús lleva 55 plazas. ¿Cuántos autobuses hacen falta? Si cada autobús cuesta 95€, ¿cuál es el coste total?", pista:"Pide primero una estimación rápida del número de autobuses antes de calcular con precisión, para entrenar la fase de revisión (Bloque III)."},
+  {ciclo:"3-4", sentido:"medida", titulo:"El bizcocho a escala", obj:"Proporcionalidad en una receta", enun:"Una receta de bizcocho para 6 personas necesita 240 g de harina. ¿Cuánta harina hace falta para 9 personas? ¿Y para 4?", pista:"Deja que prueben distintas estrategias (tabla, regla de tres informal, dibujo) antes de formalizar el procedimiento."},
+  {ciclo:"3-4", sentido:"espacial", titulo:"El plano del huerto escolar", obj:"Área y disposición de un espacio real", enun:"El huerto escolar mide 6 m × 4 m. Tenéis que repartirlo en 3 parcelas rectangulares de distinto tamaño para distintos cultivos. Dibujad el plano y calculad el área de cada parcela.", pista:"Conecta con el sentido algebraico pidiendo que comprueben que la suma de las tres áreas coincide con el área total."},
+  {ciclo:"3-4", sentido:"algebraico", titulo:"La máquina de números", obj:"Relaciones funcionales sencillas", enun:"Una «máquina» transforma números así: entra el 3, sale el 8; entra el 5, sale el 12; entra el 7, sale el 16. ¿Qué regla sigue la máquina? ¿Qué saldría si entra el 10?", pista:"Anímales a probar varias reglas y descartarlas con los datos, no solo a buscar la respuesta «de un vistazo»."},
+  {ciclo:"3-4", sentido:"estocastico", titulo:"La encuesta de la clase", obj:"Recogida e interpretación de datos", enun:"Haced una encuesta en clase sobre el deporte favorito de cada compañero. Representad los datos en una gráfica de barras y escribid tres conclusiones que se puedan extraer de ella.", pista:"Pide al menos una conclusión que compare categorías (\"el doble de alumnos prefieren X que Y\") para entrenar la lectura crítica de datos."},
+  {ciclo:"3-4", sentido:"socioafectivo", titulo:"El problema sin solución única", obj:"Tolerancia a la incertidumbre y comparación de estrategias", enun:"Tenéis 50€ para organizar una merienda de cumpleaños de la clase con al menos tres tipos de alimento distintos. Decidid en grupos pequeños qué comprar y comparad después las distintas propuestas.", pista:"Resalta que no hay una propuesta «correcta»: la evaluación está en la justificación y en cómo gestionan el desacuerdo entre grupos."},
+
+  {ciclo:"5-6", sentido:"numerico", titulo:"El reparto de la herencia", obj:"Fracciones y porcentajes combinados", enun:"Tres hermanos heredan 36.000€ a repartir así: el mayor recibe la mitad, el mediano un tercio del resto, y el pequeño lo que quede. ¿Cuánto recibe cada uno?", pista:"Es un problema de varios pasos encadenados: pide que escriban explícitamente qué calculan en cada paso antes de operar (fase 2 de Pólya)."},
+  {ciclo:"5-6", sentido:"medida", titulo:"El depósito que se llena y se vacía", obj:"Magnitudes que cambian en el tiempo", enun:"Un depósito se llena a razón de 12 litros por minuto y, a la vez, se vacía por una fuga a razón de 5 litros por minuto. Si empieza vacío, ¿cuántos litros tendrá a los 8 minutos?", pista:"Sugiere construir una tabla minuto a minuto antes de buscar el atajo (multiplicar la diferencia neta por el tiempo)."},
+  {ciclo:"5-6", sentido:"espacial", titulo:"El mapa a escala del barrio", obj:"Escalas y proporcionalidad geométrica", enun:"En un mapa, 2 cm representan 500 m reales. Si la distancia entre el colegio y la biblioteca en el mapa es de 7 cm, ¿cuál es la distancia real?", pista:"Pide que estimen antes la respuesta a ojo (\"¿es más o menos de 1 km?\") para entrenar el sentido de la magnitud."},
+  {ciclo:"5-6", sentido:"algebraico", titulo:"La sucesión de las baldosas", obj:"Generalización de un patrón con expresión algebraica sencilla", enun:"Una figura de baldosas crece así: la figura 1 tiene 4 baldosas, la figura 2 tiene 7, la figura 3 tiene 10. ¿Cuántas baldosas tendrá la figura 20? Intenta escribir una regla general.", pista:"Antes de buscar la fórmula, pide que dibujen la figura 4 y la 5 a mano: ver el patrón crecer ayuda a generalizarlo después."},
+  {ciclo:"5-6", sentido:"estocastico", titulo:"¿Vale la pena jugar?", obj:"Probabilidad y esperanza intuitiva", enun:"En un juego, lanzas un dado: si sale 6, ganas 5€; si sale cualquier otro número, pierdes 1€. Jugando muchas veces, ¿te conviene jugar? Explica tu razonamiento con datos.", pista:"Simula el juego 30 veces en clase (real o con una tabla de números aleatorios) antes de pedir el razonamiento teórico."},
+  {ciclo:"5-6", sentido:"socioafectivo", titulo:"El proyecto del viaje de fin de curso", obj:"Investigación abierta con decisión grupal y presupuesto real", enun:"Tenéis que diseñar la propuesta de un viaje de fin de curso con un presupuesto máximo de 3.000€ para 25 alumnos, incluyendo transporte, alojamiento y al menos dos actividades. Presentad la propuesta justificando cada decisión.", pista:"Es una investigación (Bloque I) de varias sesiones: dad tiempo para buscar precios reales y para que el grupo negocie prioridades distintas."},
+];
+
+const fichasContainer = document.getElementById('fichasContainer');
+const ciclioLabels = {"1-2":"1º-2º","3-4":"3º-4º","5-6":"5º-6º"};
+const sentidoLabels = {numerico:"Numérico",medida:"Medida",espacial:"Espacial",algebraico:"Algebraico",estocastico:"Estocástico",socioafectivo:"Socioafectivo"};
+
+function renderFichas(){
+  const activeCiclo = document.querySelector('.chip[data-type="ciclo"].active').dataset.value;
+  const activeSentido = document.querySelector('.chip[data-type="sentido"].active').dataset.value;
+  const filtered = fichas.filter(f =>
+    (activeCiclo==="all" || f.ciclo===activeCiclo) &&
+    (activeSentido==="all" || f.sentido===activeSentido)
+  );
+  document.getElementById('countText').textContent = filtered.length + (filtered.length===1 ? " ficha" : " fichas");
+  fichasContainer.innerHTML = filtered.map(f => `
+    <div class="ficha">
+      <div class="meta">
+        <span class="ciclo">${ciclioLabels[f.ciclo]}</span>
+        <span class="sentido">${sentidoLabels[f.sentido]}</span>
+      </div>
+      <h3>${f.titulo}</h3>
+      <p><span class="label">Objetivo · </span>${f.obj}</p>
+      <p>${f.enun}</p>
+      <details>
+        <summary>Pista para el maestro</summary>
+        <p style="margin-top:6px;">${f.pista}</p>
+      </details>
+    </div>
+  `).join('');
+}
+
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const type = chip.dataset.type;
+    document.querySelectorAll(`.chip[data-type="${type}"]`).forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    renderFichas();
+  });
+});
+renderFichas();
+
+/* ===================== QUIZ: 40 PREGUNTAS ===================== */
+const quiz = [
+  // BLOQUE I — 10 preguntas
+  {block:1,q:"Según el criterio del obstáculo, una tarea matemática es un problema cuando…",opts:[
+    {t:"Tiene un contexto narrativo, aunque la operación sea evidente",c:false,f:"El contexto narrativo no convierte un ejercicio en problema; lo decisivo es si hay un camino evidente o no."},
+    {t:"El resolutor no dispone de un procedimiento directo y conocido para alcanzar el objetivo",c:true,f:"Correcto: la existencia de un obstáculo —una distancia entre lo que el alumno sabe hacer y lo que se le exige— es justamente lo que define un problema."},
+    {t:"Tiene varios datos numéricos que combinar",c:false,f:"La cantidad de datos no determina si algo es un problema; puede haber un único dato y un obstáculo real."},
+    {t:"Está planteado en formato de pregunta abierta",c:false,f:"El formato de la pregunta no es lo que define un problema, sino la ausencia de un camino directo conocido."}
+  ]},
+  {block:1,q:"Un mismo enunciado puede ser un problema para un alumno y un ejercicio para otro porque…",opts:[
+    {t:"Depende de la dificultad objetiva del enunciado",c:false,f:"La dificultad objetiva del papel no determina nada por sí sola: depende de la relación entre la tarea y quien la resuelve."},
+    {t:"Ser problema o ejercicio es una relación entre la tarea y lo que el resolutor ya domina",c:true,f:"Correcto: no es una propiedad fija del enunciado, sino de la relación entre la tarea y el conocimiento previo de quien la resuelve."},
+    {t:"Los problemas siempre dependen de la edad cronológica del alumno",c:false,f:"La edad no es el factor determinante; lo es el conocimiento previo específico sobre ese contenido."},
+    {t:"Solo ocurre en matemáticas, no en otras áreas",c:false,f:"El fenómeno no es exclusivo de matemáticas, aunque en este curso se trate en ese contexto."}
+  ]},
+  {block:1,q:"¿Cuál de estas tareas es un ejercicio, no un problema, según lo trabajado en el bloque?",opts:[
+    {t:"20 sumas con llevadas justo después de explicar el algoritmo",c:true,f:"Correcto: el procedimiento ya ha sido enseñado y el alumno solo tiene que aplicarlo, sin decidir nada nuevo."},
+    {t:"Encontrar todas las formas de formar 1€ con monedas de 5, 10 y 20 céntimos",c:false,f:"Esta tarea es un problema de proceso: no hay un único camino evidente y exige explorar varias combinaciones."},
+    {t:"Diseñar el reparto de un patio en tres zonas con un presupuesto de espacio limitado",c:false,f:"Es una investigación abierta, no un ejercicio: no hay procedimiento directo conocido."},
+    {t:"Decidir cuántos autobuses hacen falta para una excursión sin dato exacto de plazas",c:false,f:"Exige decidir una estrategia (división con resto, estimación), por lo que es un problema, no un ejercicio."}
+  ]},
+  {block:1,q:"La diferencia principal entre exploración e investigación, según el bloque, es que…",opts:[
+    {t:"La exploración es individual y la investigación siempre grupal",c:false,f:"Ambas pueden hacerse individual o grupalmente; esa no es la diferencia clave."},
+    {t:"La exploración busca un patrón que el maestro ya tiene en mente; la investigación parte de una pregunta más abierta y sostenida",c:true,f:"Correcto: la exploración tiene un grado de cierre mayor (el maestro sabe qué se va a descubrir); la investigación es más abierta en proceso y a veces en respuesta."},
+    {t:"La exploración usa material manipulativo y la investigación no",c:false,f:"El uso de material no es lo que las distingue; ambas pueden usarlo o no."},
+    {t:"Solo la investigación tiene una respuesta numérica final",c:false,f:"Es al revés en muchos casos: la investigación puede no tener una única respuesta numérica final."}
+  ]},
+  {block:1,q:"Un problema de «comparación», según la estructura semántica de Carpenter y Moser, es aquel en el que…",opts:[
+    {t:"Una cantidad inicial se transforma por una acción de aumento o disminución",c:false,f:"Esa es la estructura de «cambio», no de «comparación»."},
+    {t:"Dos cantidades se unen en un total sin transformación temporal",c:false,f:"Esa es la estructura de «combinación»."},
+    {t:"Se compara una cantidad con otra para hallar la diferencia entre ambas",c:true,f:"Correcto: la estructura de comparación pregunta por la relación entre dos cantidades ya existentes, no por una transformación."},
+    {t:"Se pregunta cuánto falta para igualar dos cantidades",c:false,f:"Esa es la estructura de «igualación», distinta de la de comparación aunque relacionada."}
+  ]},
+  {block:1,q:"Según el bloque, los problemas de comparación e igualación suelen ser más difíciles que los de cambio y combinación porque…",opts:[
+    {t:"Usan números más grandes",c:false,f:"La dificultad no depende del tamaño de los números usados en el ejemplo."},
+    {t:"Exigen representar mentalmente una relación entre cantidades, no solo una transformación",c:true,f:"Correcto: representar una relación (comparar, igualar) es cognitivamente más exigente que representar una transformación directa."},
+    {t:"Siempre implican una resta, mientras que los otros implican una suma",c:false,f:"Cualquiera de las cuatro estructuras puede resolverse con suma o resta; el tipo de operación no es lo que marca la dificultad."},
+    {t:"No tienen relación con la edad del alumno",c:false,f:"Sí están relacionados con el desarrollo del alumno, pero esa no es la explicación de por qué son más difíciles en igualdad de condiciones."}
+  ]},
+  {block:1,q:"¿Cuál de las siguientes es una afirmación correcta sobre la dificultad «artificial» de un enunciado?",opts:[
+    {t:"Un buen problema debe tener un enunciado complicado a propósito para exigir más comprensión lectora",c:false,f:"Esto es justamente el mito que el bloque desmonta: complicar el enunciado mide comprensión lectora bajo presión, no pensamiento matemático."},
+    {t:"Un buen problema es claro en el enunciado y exigente en el camino de resolución",c:true,f:"Correcto: la claridad del enunciado y la exigencia del razonamiento son cosas distintas, y conviene no confundirlas."},
+    {t:"Cuantos más datos irrelevantes tenga un enunciado, mejor entrena el pensamiento crítico",c:false,f:"Un exceso deliberado de datos irrelevantes entrena sobre todo la lectura selectiva, no necesariamente el razonamiento matemático de fondo."},
+    {t:"La dificultad de un problema depende solo de la longitud del enunciado",c:false,f:"La longitud del enunciado no determina la dificultad matemática real de la tarea."}
+  ]},
+  {block:1,q:"Cuando un alumno se bloquea ante un problema, lo recomendado según el bloque es…",opts:[
+    {t:"Darle directamente la operación que tiene que hacer",c:false,f:"Esto convierte el problema en ejercicio en ese mismo instante, eliminando el momento de pensamiento que se buscaba entrenar."},
+    {t:"Preguntarle qué sabe ya y qué le están preguntando",c:true,f:"Correcto: ayudar a comprender sin resolver por él mantiene la tarea como problema y entrena la fase de comprensión."},
+    {t:"Pasar al siguiente alumno y volver más tarde sin intervenir",c:false,f:"No intervenir en absoluto no ayuda a que el alumno desarrolle estrategia; el bloque recomienda una intervención que guíe sin resolver."},
+    {t:"Decirle que lo intente con otro problema más fácil del libro",c:false,f:"Cambiar de problema no atiende al bloqueo concreto que está ocurriendo; sustituye el reto en lugar de acompañarlo."}
+  ]},
+  {block:1,q:"¿Qué tipo de actividad matemática tiene como objetivo principal «transferir un procedimiento conocido a un contexto nuevo»?",opts:[
+    {t:"Ejercicio",c:false,f:"El ejercicio busca automatizar, no transferir a un contexto distinto."},
+    {t:"Problema de aplicación",c:true,f:"Correcto: el problema de aplicación parte de un procedimiento ya consolidado y entrena decidir cuándo y cómo usarlo en un contexto nuevo."},
+    {t:"Exploración",c:false,f:"La exploración busca descubrir una regularidad, no aplicar un procedimiento ya conocido."},
+    {t:"Investigación",c:false,f:"La investigación parte de una pregunta abierta, sin un procedimiento predeterminado que transferir."}
+  ]},
+  {block:1,q:"Un aula que solo trabaja con ejercicios y problemas de aplicación, sin exploración ni investigación…",opts:[
+    {t:"Entrena igual de bien todos los tipos de pensamiento matemático",c:false,f:"No es así: cada tipo de actividad entrena procesos distintos, y limitarse a dos de los cuatro deja sin desarrollar la apertura y la indagación propia."},
+    {t:"Deja sin entrenar la capacidad de descubrir patrones y de plantear preguntas propias",c:true,f:"Correcto: la exploración y la investigación son las que entrenan el descubrimiento de regularidades y la formulación de preguntas propias, ausentes en ejercicios y aplicaciones."},
+    {t:"Es la forma más eficaz de preparar a los alumnos para cualquier evaluación",c:false,f:"Puede preparar bien para tareas cerradas, pero no para situaciones que exigen pensamiento abierto, cada vez más presentes en la evaluación por competencias."},
+    {t:"No tiene ninguna consecuencia relevante para el aprendizaje",c:false,f:"Sí la tiene: empobrece la variedad de pensamiento matemático que se entrena en el aula."}
+  ]},
+
+  // BLOQUE II — 10 preguntas
+  {block:2,q:"La diferencia clave entre un problema rutinario y uno no rutinario es que…",opts:[
+    {t:"El no rutinario siempre tiene números más grandes",c:false,f:"El tamaño de los números no define si un problema es rutinario o no."},
+    {t:"En el rutinario el alumno aplica una estrategia ya consolidada; en el no rutinario tiene que construir o adaptar una nueva",c:true,f:"Correcto: la distinción está en si el alumno reconoce y aplica una familia de estrategia conocida, o tiene que inventar/adaptar una."},
+    {t:"El rutinario no tiene contexto narrativo",c:false,f:"Ambos tipos pueden tener o no contexto narrativo; eso no es lo que los distingue."},
+    {t:"El no rutinario solo aparece en los últimos cursos de primaria",c:false,f:"Pueden aparecer problemas no rutinarios adaptados a cualquier ciclo, incluyendo el primero."}
+  ]},
+  {block:2,q:"Un problema «de proceso», según la tipología del bloque, se caracteriza porque…",opts:[
+    {t:"Tiene una única respuesta correcta y un camino definido",c:false,f:"Esa es la característica de un problema cerrado, no de uno de proceso."},
+    {t:"El valor está en el camino seguido, y a veces no hay una única respuesta numérica final",c:true,f:"Correcto: en los problemas de proceso lo relevante es el recorrido, no solo (o no únicamente) un resultado numérico cerrado."},
+    {t:"Siempre se resuelve en una sola sesión de clase",c:false,f:"La duración no es lo que define a un problema de proceso; puede resolverse en una o varias sesiones."},
+    {t:"No puede combinarse con problemas abiertos",c:false,f:"De hecho, muchos problemas de proceso son también abiertos; no son categorías excluyentes."}
+  ]},
+  {block:2,q:"Según la estructura semántica de Carpenter y Moser, «Ana tiene 8 cromos, gana 5. ¿Cuántos tiene ahora?» es un problema de tipo…",opts:[
+    {t:"Cambio",c:true,f:"Correcto: hay una cantidad inicial que se transforma por una acción (ganar), lo que define la estructura de cambio."},
+    {t:"Combinación",c:false,f:"La combinación une dos cantidades distintas en un total, sin transformación temporal; aquí hay una transformación."},
+    {t:"Comparación",c:false,f:"La comparación contrasta dos cantidades existentes; aquí solo hay una cantidad que cambia."},
+    {t:"Igualación",c:false,f:"La igualación pregunta cuánto falta para que dos cantidades coincidan; no es el caso de este enunciado."}
+  ]},
+  {block:2,q:"El sentido matemático que el currículo LOMLOE incorpora como novedad más relevante respecto a los antiguos bloques de contenido es…",opts:[
+    {t:"El sentido numérico",c:false,f:"El sentido numérico tiene equivalencia directa con el antiguo bloque de Números; no es la novedad principal."},
+    {t:"El sentido socioafectivo",c:true,f:"Correcto: es el sentido que no tiene equivalente directo en los antiguos bloques de contenido y recoge la dimensión emocional y relacional del aprendizaje matemático."},
+    {t:"El sentido espacial",c:false,f:"Corresponde, a grandes rasgos, al antiguo bloque de Geometría; no es la novedad principal del marco actual."},
+    {t:"El sentido de la medida",c:false,f:"Tiene equivalencia con el antiguo bloque de Medida; no es la novedad principal."}
+  ]},
+  {block:2,q:"La ansiedad matemática, según lo expuesto en el bloque, tiene como consecuencia principal que…",opts:[
+    {t:"Solo afecta a la motivación, no al rendimiento real",c:false,f:"La investigación citada muestra justamente lo contrario: afecta directamente al rendimiento, no solo a la motivación."},
+    {t:"Predice peor rendimiento independientemente de la capacidad real del alumno",c:true,f:"Correcto: un alumno con ansiedad matemática alta rinde peor que uno con menos ansiedad y la misma capacidad de partida."},
+    {t:"Solo aparece en secundaria, no en primaria",c:false,f:"Puede manifestarse ya en primaria; no es un fenómeno exclusivo de etapas posteriores."},
+    {t:"Desaparece automáticamente si el alumno mejora en cálculo",c:false,f:"Mejorar el cálculo no elimina necesariamente la ansiedad asociada, que tiene también un componente emocional propio."}
+  ]},
+  {block:2,q:"¿Cuál de estas intervenciones trabaja directamente el sentido socioafectivo, según el bloque?",opts:[
+    {t:"Aumentar el número de ejercicios de cálculo mental diarios",c:false,f:"Esto entrena sobre todo el sentido numérico, no directamente el socioafectivo."},
+    {t:"Preguntar quién se ha quedado atascado en algún momento y qué ha hecho para seguir",c:true,f:"Correcto: normalizar el atasco como parte visible y comentable del proceso es una intervención directa sobre el sentido socioafectivo."},
+    {t:"Reducir el tiempo dedicado a la puesta en común de estrategias",c:false,f:"Reducir ese tiempo va en sentido contrario a lo recomendado, que es dar espacio a la comparación y la justificación entre compañeros."},
+    {t:"Evaluar exclusivamente con pruebas cronometradas",c:false,f:"Las pruebas cronometradas tienden a aumentar la presión y la ansiedad, en lugar de trabajar el sentido socioafectivo."}
+  ]},
+  {block:2,q:"Un problema bien diseñado, según el apartado sobre diseño multisentido…",opts:[
+    {t:"Debe limitarse a activar un único sentido matemático para no confundir al alumno",c:false,f:"El bloque defiende justamente lo contrario: un buen problema rara vez se limita a un solo sentido."},
+    {t:"Puede activar varios sentidos a la vez, como el de la medida, el espacial y el socioafectivo combinados",c:true,f:"Correcto: el ejemplo del patio de recreo del bloque muestra cómo un mismo problema activa varios sentidos simultáneamente."},
+    {t:"Nunca debe incluir una decisión de grupo, porque eso pertenece a otra área",c:false,f:"La decisión grupal con justificación es precisamente parte de cómo se activa el sentido socioafectivo dentro de las matemáticas."},
+    {t:"Debe evitar el sentido estocástico en cursos de primaria",c:false,f:"El sentido estocástico está presente en el currículo de primaria y puede combinarse con otros sin problema."}
+  ]},
+  {block:2,q:"Los problemas «abiertos», a diferencia de los «cerrados», se caracterizan porque…",opts:[
+    {t:"No tienen ninguna relación con el currículo oficial",c:false,f:"Los problemas abiertos están plenamente integrados en el currículo, especialmente en el desarrollo de varios sentidos matemáticos."},
+    {t:"Admiten varias respuestas válidas o varios caminos igualmente legítimos",c:true,f:"Correcto: esa es la característica que define a un problema abierto frente a uno cerrado, que tiene una única respuesta correcta."},
+    {t:"Son siempre más fáciles de corregir que los cerrados",c:false,f:"Es al revés: suelen ser más difíciles de corregir con rapidez precisamente porque no hay una única respuesta que marcar."},
+    {t:"Solo existen en el sentido estocástico",c:false,f:"Los problemas abiertos pueden darse en cualquiera de los seis sentidos matemáticos, no solo en el estocástico."}
+  ]},
+  {block:2,q:"¿Por qué clasificar los problemas es útil como herramienta de planificación, según el bloque?",opts:[
+    {t:"Porque permite auditar qué tipo de obstáculo se ha ofrecido al aula en un periodo de tiempo",c:true,f:"Correcto: la tipología sirve para revisar la variedad real de tareas propuestas, no solo como ejercicio académico de clasificación."},
+    {t:"Porque es un requisito legal recogido en el currículo de forma literal",c:false,f:"No se presenta como un requisito legal en sí mismo, sino como una herramienta práctica de planificación docente."},
+    {t:"Porque facilita poner siempre el mismo tipo de problema cada semana",c:false,f:"El objetivo es justamente el contrario: detectar si se está repitiendo siempre el mismo tipo y variar la dieta de problemas."},
+    {t:"Porque simplifica la corrección al reducir todos los problemas a un único formato",c:false,f:"Clasificar no simplifica ni unifica el formato de corrección; sirve para diversificar la práctica, no para homogeneizarla."}
+  ]},
+  {block:2,q:"El sentido estocástico del currículo está relacionado principalmente con…",opts:[
+    {t:"Razonar con incertidumbre, datos y probabilidad",c:true,f:"Correcto: es el sentido que recoge el razonamiento sobre azar, recogida e interpretación de datos."},
+    {t:"Identificar patrones y generalizar relaciones",c:false,f:"Eso corresponde al sentido algebraico, no al estocástico."},
+    {t:"Cuantificar magnitudes y manejar unidades",c:false,f:"Eso corresponde al sentido de la medida."},
+    {t:"Razonar sobre formas y posiciones",c:false,f:"Eso corresponde al sentido espacial."}
+  ]},
+
+  // BLOQUE III — 10 preguntas
+  {block:3,q:"Según el bloque, el uso de material manipulativo en la resolución de problemas…",opts:[
+    {t:"Es una muleta que ralentiza el pensamiento abstracto y debería evitarse",c:false,f:"El bloque defiende lo contrario: la representación externa hace visible y corregible el pensamiento, no lo bloquea."},
+    {t:"Es la forma en que el pensamiento matemático se hace visible, manipulable y corregible",c:true,f:"Correcto: esta es la idea central de 4.1 sobre por qué importan los recursos."},
+    {t:"Solo debe usarse en el primer ciclo de primaria",c:false,f:"El bloque señala que algunos alumnos pueden necesitar material manipulativo más allá del primer ciclo según su ritmo real."},
+    {t:"Debe sustituirse siempre que exista una alternativa digital",c:false,f:"El bloque no plantea una jerarquía de sustitución; manipulativo y digital se presentan como complementarios."}
+  ]},
+  {block:3,q:"¿Qué material manipulativo se asocia principalmente al sentido algebraico, según la tabla del bloque?",opts:[
+    {t:"El geoplano",c:false,f:"El geoplano se asocia principalmente al sentido espacial y de la medida."},
+    {t:"La balanza de dos platillos",c:true,f:"Correcto: la balanza apoya problemas de equivalencia e igualdad, propios del sentido algebraico."},
+    {t:"El material base 10",c:false,f:"El material base 10 se asocia principalmente al sentido numérico."},
+    {t:"Los dados",c:false,f:"Los dados se asocian principalmente al sentido estocástico."}
+  ]},
+  {block:3,q:"Según el mito desmontado en 4.3, un recurso digital ayuda realmente cuando…",opts:[
+    {t:"Automatiza completamente el cálculo para que el alumno no tenga que pensarlo",c:false,f:"Esto es justo lo que el bloque señala como riesgo: si solo automatiza el cálculo, elimina la parte del proceso que el problema pretendía entrenar."},
+    {t:"Hace visible una relación que sería difícil de ver de otra forma",c:true,f:"Correcto: el valor real del recurso digital está en mostrar relaciones dinámicas difíciles de construir con material físico."},
+    {t:"Sustituye completamente al material manipulativo en todos los ciclos",c:false,f:"El bloque presenta ambos como complementarios, no como sustitutos el uno del otro."},
+    {t:"Se usa en todas las sesiones de matemáticas sin excepción",c:false,f:"No se recomienda un uso indiscriminado; depende de si aporta algo que otro recurso no aporta."}
+  ]},
+  {block:3,q:"La retirada del material manipulativo, según 4.4, debe decidirse principalmente en función de…",opts:[
+    {t:"El calendario escolar y el curso en el que está el alumno",c:false,f:"El bloque indica explícitamente que la retirada no debe guiarse por el calendario."},
+    {t:"La observación de si la representación mental del alumno ya está consolidada",c:true,f:"Correcto: la retirada debe ser progresiva y basarse en la observación real del alumno, no en una fecha fija."},
+    {t:"La media de la clase, independientemente del ritmo individual",c:false,f:"El bloque defiende un criterio individual, no una media grupal."},
+    {t:"La disponibilidad de materiales en el centro",c:false,f:"La disponibilidad de materiales no es el criterio pedagógico que determina cuándo retirarlos."}
+  ]},
+  {block:3,q:"Las cuatro fases de Pólya, en orden, son…",opts:[
+    {t:"Ejecutar, comprender, planificar, revisar",c:false,f:"El orden correcto empieza por comprender el problema, no por ejecutar un plan."},
+    {t:"Comprender el problema, concebir un plan, ejecutar el plan, revisar",c:true,f:"Correcto: este es el orden clásico del modelo heurístico de Pólya desarrollado en el bloque."},
+    {t:"Planificar, revisar, comprender, ejecutar",c:false,f:"No es el orden correcto; la comprensión siempre precede a la planificación."},
+    {t:"Comprender, ejecutar, planificar, revisar",c:false,f:"La planificación debe ocurrir antes de la ejecución, no después."}
+  ]},
+  {block:3,q:"Según el bloque, la fase más sistemáticamente saltada en el aula de primaria es…",opts:[
+    {t:"Comprender el problema",c:false,f:"Aunque también puede fallar, el bloque señala específicamente la fase de revisión como la más saltada."},
+    {t:"Concebir un plan",c:false,f:"No es la fase que el bloque identifica como la más habitualmente omitida."},
+    {t:"Ejecutar el plan",c:false,f:"Es la fase que casi siempre se realiza, aunque a veces con errores; no es la que se salta."},
+    {t:"Revisar",c:true,f:"Correcto: el bloque señala explícitamente la revisión como la fase más saltada, y propone entrenarla con la frase «esto tiene sentido porque…»."}
+  ]},
+  {block:3,q:"¿Cuál de las siguientes NO es una de las heurísticas concretas presentadas en el bloque?",opts:[
+    {t:"Hacer un dibujo o esquema",c:false,f:"Sí es una de las heurísticas presentadas en 5.2."},
+    {t:"Memorizar el enunciado palabra por palabra antes de empezar",c:true,f:"Correcto: esta no aparece como heurística en el bloque; memorizar literalmente no ayuda a decidir una estrategia de resolución."},
+    {t:"Resolver un problema más simple",c:false,f:"Sí es una de las heurísticas presentadas en 5.2."},
+    {t:"Trabajar hacia atrás",c:false,f:"Sí es una de las heurísticas presentadas en 5.2."}
+  ]},
+  {block:3,q:"La resolución de problemas, según 5.3, moviliza competencias clave más allá de la matemática porque…",opts:[
+    {t:"Solo afecta a la competencia digital cuando se usan ordenadores",c:false,f:"El bloque señala varias competencias implicadas, no solo la digital y solo en ese caso concreto."},
+    {t:"Implica también comunicación lingüística, competencia social y, en problemas con contexto real, competencia ciudadana",c:true,f:"Correcto: justificar el razonamiento, trabajar en equipo y tomar decisiones con contexto real movilizan estas competencias además de la matemática."},
+    {t:"No tiene relación con ninguna otra competencia clave del currículo",c:false,f:"El bloque defiende justamente la idea contraria: hay una conexión clara con varias competencias clave."},
+    {t:"Depende exclusivamente de la competencia matemática (STEM)",c:false,f:"El bloque amplía expresamente esa visión a otras competencias además de la STEM."}
+  ]},
+  {block:3,q:"El «banco de heurísticas visible» propuesto como actividad de aula sirve principalmente para…",opts:[
+    {t:"Que el maestro dé siempre la solución directamente cuando un alumno se atasca",c:false,f:"El objetivo es justo lo contrario: redirigir al alumno hacia el panel, no darle la solución."},
+    {t:"Que el alumno tenga un repertorio de estrategias al que recurrir cuando no sabe cómo empezar",c:true,f:"Correcto: el panel funciona como apoyo visible que el alumno interioriza progresivamente, según se describe en la actividad."},
+    {t:"Sustituir la explicación inicial del maestro sobre el problema",c:false,f:"No sustituye la fase de comprensión guiada; es un apoyo durante la fase de planificación/ejecución."},
+    {t:"Evaluar al alumno de forma sumativa al final del trimestre",c:false,f:"Se presenta como herramienta de apoyo en el momento de resolver, no como instrumento de evaluación sumativa."}
+  ]},
+  {block:3,q:"¿Por qué se afirma en el bloque que enseñamos heurísticas «para que el alumno tenga algo que hacer la próxima vez que no sepa qué hacer»?",opts:[
+    {t:"Porque el objetivo final es resolver un problema concreto memorizado",c:false,f:"El objetivo no es memorizar la solución de un problema concreto, sino transferir estrategias a problemas futuros distintos."},
+    {t:"Porque las heurísticas buscan dar un repertorio transferible a problemas nuevos y distintos",c:true,f:"Correcto: el valor de la heurística está en su transferencia a situaciones futuras desconocidas, no en un problema puntual."},
+    {t:"Porque sin heurísticas un alumno no puede aprobar el curso",c:false,f:"El bloque no plantea las heurísticas en términos de aprobado o suspenso, sino de autonomía ante problemas nuevos."},
+    {t:"Porque cada heurística solo sirve para un único tipo de problema muy específico",c:false,f:"Es justo lo contrario: las heurísticas se valoran por ser aplicables a una amplia variedad de problemas distintos."}
+  ]},
+
+  // BLOQUE IV — 10 preguntas
+  {block:4,q:"El principio central de «Aulas para pensar», según 6.1, es que la sesión dedica más tiempo a…",opts:[
+    {t:"Ejecutar cálculos que a comprender o planificar el problema",c:false,f:"Es justo al revés: el principio central es dedicar más tiempo a comprender y planificar que a ejecutar."},
+    {t:"Comprender y planificar (fases 1 y 2 de Pólya) que a ejecutar, reservando tiempo para comparar estrategias",c:true,f:"Correcto: este es el principio central definido explícitamente en 6.1."},
+    {t:"Corregir el cuaderno individualmente, sin puesta en común",c:false,f:"La propuesta reserva siempre un tramo de comparación de estrategias entre compañeros, no solo corrección individual."},
+    {t:"Repetir el mismo problema varias veces seguidas en la misma sesión",c:false,f:"No es esa la estructura propuesta; cada sesión gira en torno a un problema trabajado en distintas fases, no a la repetición del mismo."}
+  ]},
+  {block:4,q:"En la secuencia de sesión de 6.2, si solo se dispone de 20 minutos, el bloque recomienda no recortar…",opts:[
+    {t:"Los pasos 1 (comprensión) y 4 (comparación de estrategias)",c:true,f:"Correcto: son los dos momentos señalados como los que más diferencian resolver un problema de hacer un ejercicio con prisa."},
+    {t:"El paso 3 (resolución individual) únicamente",c:false,f:"El bloque no señala este paso como el prioritario a conservar por encima de los otros si hay que recortar tiempo."},
+    {t:"El paso 5 (cierre y registro) exclusivamente",c:false,f:"Aunque valioso, no es el paso que el bloque destaca como imprescindible si el tiempo es limitado."},
+    {t:"Ningún paso en particular: todos tienen la misma prioridad",c:false,f:"El bloque sí establece una prioridad clara entre los pasos cuando el tiempo es limitado."}
+  ]},
+  {block:4,q:"El «problema de la semana», descrito en 6.3, tiene como ventaja principal que…",opts:[
+    {t:"Se resuelve siempre en menos tiempo que un problema normal",c:false,f:"No se plantea como una forma de ahorrar tiempo, sino de dar más tiempo distribuido a lo largo de varios días."},
+    {t:"Da espacio a la incubación de ideas a lo largo de varios días, algo que una sesión única no permite",c:true,f:"Correcto: esta es la ventaja explícita señalada en 6.3 frente a la sesión de 45 minutos."},
+    {t:"Elimina la necesidad de la puesta en común final",c:false,f:"La puesta en común sigue siendo parte central de la propuesta, programada para el cierre de la semana."},
+    {t:"Solo puede aplicarse a problemas cerrados con una única solución",c:false,f:"El bloque recomienda preferiblemente problemas abiertos o de proceso para esta modalidad."}
+  ]},
+  {block:4,q:"El diario matemático descrito en 6.4 se diferencia de un cuaderno de ejercicios corregido porque…",opts:[
+    {t:"Se corrige con la misma escala numérica que cualquier examen",c:false,f:"El bloque indica explícitamente que no se corrige como un cuaderno de ejercicios."},
+    {t:"Se lee para entender el proceso de pensamiento del alumno, no para puntuar aciertos y errores",c:true,f:"Correcto: esta es la función explícita del diario matemático señalada en 6.4."},
+    {t:"Solo lo rellena el maestro, nunca el alumno",c:false,f:"Es el propio alumno quien registra su estrategia, no el maestro."},
+    {t:"Se actualiza una sola vez al final del curso",c:false,f:"Se actualiza después de cada problema relevante, no una única vez al final del curso."}
+  ]},
+  {block:4,q:"Según 7.1, evaluar la resolución de problemas solo por el resultado final…",opts:[
+    {t:"Es la forma más justa de evaluar, porque trata a todos los alumnos por igual",c:false,f:"El bloque argumenta justo lo contrario: trata igual situaciones cualitativamente distintas (acierto por estrategia sólida frente a acierto por azar)."},
+    {t:"Mide casi exclusivamente la suerte de haber dado con el camino correcto, no la calidad del pensamiento",c:true,f:"Correcto: esta es la crítica central a la corrección binaria planteada en 7.1."},
+    {t:"Es equivalente a evaluar con la rúbrica de proceso de 7.2",c:false,f:"Son enfoques distintos: la rúbrica evalúa varias dimensiones del proceso, no solo el resultado final."},
+    {t:"No tiene ninguna desventaja relevante frente a otros métodos",c:false,f:"El bloque sí señala desventajas claras, especialmente la incapacidad de distinguir comprensión real de acierto casual."}
+  ]},
+  {block:4,q:"En la rúbrica de proceso de 7.2, la dimensión «Estrategia» en su nivel más alto exige que el alumno…",opts:[
+    {t:"Elija una estrategia adecuada sin más",c:false,f:"Ese descriptor corresponde a un nivel intermedio (nivel 3), no al más alto."},
+    {t:"Justifique por qué esa estrategia es adecuada frente a otras posibles",c:true,f:"Correcto: el nivel 4 de la dimensión Estrategia exige justificar la elección frente a alternativas, no solo elegir bien."},
+    {t:"Ejecute la estrategia sin cometer ningún error",c:false,f:"Ese descriptor pertenece a la dimensión «Ejecución», no a la de «Estrategia»."},
+    {t:"Abandone la tarea a mitad de camino",c:false,f:"Ese descriptor corresponde al nivel más bajo de la dimensión «Ejecución», no al nivel alto de «Estrategia»."}
+  ]},
+  {block:4,q:"Según 7.2, la rúbrica de proceso se recomienda aplicar…",opts:[
+    {t:"A todos los problemas que se ponen en clase, sin excepción",c:false,f:"El bloque recomienda reservarla para 1-2 problemas significativos al mes, no para todos los problemas."},
+    {t:"Solo en exámenes finales de evaluación",c:false,f:"No se plantea como instrumento de examen final, sino como evaluación formativa comentada con el alumno."},
+    {t:"A 1-2 problemas significativos al mes, como evaluación formativa comentada con el alumno",c:true,f:"Correcto: así se especifica explícitamente en la caja «Para tu práctica docente» de 7.2."},
+    {t:"Únicamente a los alumnos con mejores resultados académicos",c:false,f:"No se plantea ninguna restricción de este tipo; la rúbrica se propone para el conjunto del grupo."}
+  ]},
+  {block:4,q:"La observación directa descrita en 7.3 complementa a la rúbrica porque…",opts:[
+    {t:"Sustituye por completo la necesidad de cualquier rúbrica de producto final",c:false,f:"Se presenta como complemento, no como sustituto de la rúbrica."},
+    {t:"Recoge información sobre el momento del bloqueo y cómo lo resolvió el alumno, que el producto final no muestra",c:true,f:"Correcto: esta es la razón explícita por la que la observación complementa a la rúbrica según 7.3."},
+    {t:"Solo es útil si se realiza al final del trimestre",c:false,f:"Se recomienda registrarla durante la fase de resolución individual de cada sesión, no solo al final del trimestre."},
+    {t:"Elimina la necesidad de tener un portfolio matemático",c:false,f:"El bloque presenta ambos instrumentos —observación y portfolio— como complementarios entre sí."}
+  ]},
+  {block:4,q:"Pedir al alumno que se autoevalúe con las mismas categorías de la rúbrica, según 7.4, tiene como doble efecto…",opts:[
+    {t:"Reducir el tiempo de corrección del maestro y eliminar la necesidad de observación",c:false,f:"No es ese el doble efecto señalado; la autoevaluación no sustituye la observación del maestro."},
+    {t:"Desarrollar la metacognición del alumno y, con el tiempo, hacer converger su autoevaluación con la del maestro",c:true,f:"Correcto: este es el doble efecto descrito explícitamente en 7.4."},
+    {t:"Aumentar la dependencia del alumno respecto a la corrección externa",c:false,f:"El efecto buscado es el contrario: mayor autonomía y conciencia del propio proceso."},
+    {t:"Sustituir definitivamente la rúbrica del maestro a partir de cierto curso",c:false,f:"La autoevaluación se plantea como complemento formativo, no como sustitución de la evaluación del maestro."}
+  ]},
+  {block:4,q:"La metáfora del bloque sobre evaluar un viaje «solo por si llegó a su destino» ilustra que…",opts:[
+    {t:"Lo único relevante en resolución de problemas es el resultado final correcto",c:false,f:"Es la idea contraria a la que defiende la metáfora, que critica precisamente evaluar solo el destino final."},
+    {t:"Evaluar solo el resultado ignora si el camino elegido fue razonable con la información disponible en su momento",c:true,f:"Correcto: esta es la idea exacta que transmite la cita del bloque sobre evaluación de proceso."},
+    {t:"Los viajes y los problemas matemáticos no tienen ninguna relación pedagógica",c:false,f:"La metáfora se usa precisamente para establecer un paralelismo pedagógico útil, no para negar la relación."},
+    {t:"Da igual el camino elegido si el destino es el correcto",c:false,f:"Es la postura exactamente opuesta a la que defiende el bloque en su argumento sobre evaluación de proceso."}
+  ]},
+];
+
+const quizContainer = document.getElementById('quizContainer');
+let html = '';
+let lastBlock = 0;
+const blockTitles = {1:"Bloque I · Qué es un problema",2:"Bloque II · Tipos y sentidos",3:"Bloque III · Recursos y competencias",4:"Bloque IV · Aulas para pensar y evaluación"};
+quiz.forEach((item, i) => {
+  if(item.block !== lastBlock){
+    html += `<div class="q-block-label">${blockTitles[item.block]}</div>`;
+    lastBlock = item.block;
+  }
+  html += `<div class="question" data-qindex="${i}">
+    <p class="qtext">${i+1}. ${item.q}</p>
+    ${item.opts.map((o,j) => `
+      <label class="opt" data-correct="${o.c}">
+        <input type="radio" name="q${i}" value="${j}"> ${o.t}
+      </label>
+      <div class="feedback ${o.c ? 'ok':'bad'}" data-fb="${i}-${j}">${o.f}</div>
+    `).join('')}
+  </div>`;
+});
+quizContainer.innerHTML = html;
+
+document.getElementById('checkBtn').addEventListener('click', () => {
+  let correct = 0;
+  quiz.forEach((item, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    const questionDiv = document.querySelector(`.question[data-qindex="${i}"]`);
+    questionDiv.querySelectorAll('.opt').forEach((optEl, j) => {
+      optEl.classList.remove('correct-mark','wrong-mark');
+      const fb = questionDiv.querySelector(`[data-fb="${i}-${j}"]`);
+      fb.classList.remove('show');
+      if(selected && parseInt(selected.value) === j){
+        fb.classList.add('show');
+        optEl.classList.add(item.opts[j].c ? 'correct-mark' : 'wrong-mark');
+      }
+    });
+    if(selected && item.opts[parseInt(selected.value)].c) correct++;
+  });
+  document.getElementById('scoreText').textContent = `${correct} / ${quiz.length} correctas`;
+});
+</script>
+</body>
+</html>

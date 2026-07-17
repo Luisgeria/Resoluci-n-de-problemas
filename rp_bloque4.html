@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque IV · Aulas para pensar y evaluación</title>
+<style>
+  :root{--ink:#1c1a17;--paper:#f6f2ea;--rule:#d9d0bf;--accent:#1f6e5c;--accent2:#a8462f;--muted:#6b6258;--card:#fffdf9;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Iowan Old Style',serif;line-height:1.65;}
+  .sans{font-family:'Helvetica Neue',Arial,sans-serif;}
+  a{color:var(--accent);}
+  nav.top{position:sticky;top:0;z-index:30;background:rgba(246,242,234,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);padding:10px 16px;font-family:'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;}
+  nav.top a{text-decoration:none;color:var(--muted);}
+  nav.top .crumb b{color:var(--ink);}
+  .progress-wrap{height:3px;background:var(--rule);position:sticky;top:39px;z-index:29;}
+  .progress-bar{height:100%;background:var(--accent2);width:0%;transition:width .1s linear;}
+  .layout{max-width:920px;margin:0 auto;display:flex;gap:0;align-items:flex-start;padding:0 16px;}
+  aside{width:200px;flex-shrink:0;position:sticky;top:60px;padding:26px 14px 26px 0;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;display:none;}
+  @media(min-width:760px){aside{display:block;}}
+  aside h5{text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;color:var(--accent2);margin:0 0 8px;}
+  aside ul{list-style:none;padding:0;margin:0 0 20px;}
+  aside li{margin-bottom:7px;}
+  aside a{color:var(--muted);text-decoration:none;}
+  aside a:hover{color:var(--accent);}
+  main{flex:1;min-width:0;padding:26px 0 70px;max-width:680px;}
+  .block-head{margin-bottom:28px;}
+  .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent2);font-weight:700;}
+  .block-head h1{font-size:1.7rem;margin:8px 0 12px;}
+  .block-head h1 em{color:var(--accent);font-style:italic;}
+  .block-head p{color:var(--muted);font-size:.97rem;max-width:58ch;}
+  .tags{display:flex;gap:14px;flex-wrap:wrap;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.78rem;color:var(--muted);margin-top:14px;}
+  .tema-eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent);font-weight:700;margin-top:46px;}
+  h2{font-size:1.4rem;margin:6px 0 4px;}
+  h3{font-size:1.12rem;margin:26px 0 10px;color:var(--ink);}
+  h4{font-size:1rem;margin:20px 0 8px;}
+  p{margin:0 0 14px;}
+  strong{color:var(--ink);}
+  .box{border:1px solid var(--rule);background:var(--card);padding:14px 16px;margin:18px 0;border-radius:2px;}
+  .box.definition{border-left:3px solid var(--accent);}
+  .box.definition .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px;}
+  .box.practice{background:#eef3ee;border-left:3px solid var(--accent);}
+  .box.practice .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .box.activity{background:#f1ece1;border-left:3px solid var(--accent2);}
+  .box.activity .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+  .myth-pair{display:flex;flex-direction:column;gap:10px;margin:18px 0;}
+  .myth{border:1px solid var(--rule);padding:12px 14px;border-radius:2px;}
+  .myth.x{background:#f7e9e5;} .myth.check{background:#e8f0e9;}
+  .myth .tag{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .myth.x .tag{color:var(--accent2);} .myth.check .tag{color:var(--accent);}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.85rem;font-family:'Helvetica Neue',Arial,sans-serif;}
+  th,td{border:1px solid var(--rule);padding:7px 9px;text-align:left;vertical-align:top;}
+  th{background:#efe9db;font-weight:700;}
+  blockquote{font-style:italic;border-left:3px solid var(--accent2);padding-left:16px;margin:20px 0;color:var(--ink);}
+  .for-you{background:#fbf7ee;border:1px dashed var(--accent2);padding:14px 16px;margin:24px 0;border-radius:2px;}
+  .for-you .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+  hr{border:none;border-top:1px solid var(--rule);margin:40px 0;}
+  .biblio h3{margin-top:30px;}
+  .ref{margin:0 0 14px;font-size:.92rem;}
+  .ref .star{color:var(--accent2);}
+  .ref .meta{display:block;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;color:var(--muted);margin-top:3px;}
+  .block-nav{display:flex;justify-content:space-between;margin-top:50px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.85rem;}
+  .block-nav a{text-decoration:none;color:var(--accent2);}
+  .steps{counter-reset:step;list-style:none;padding:0;margin:18px 0;}
+  .steps li{counter-increment:step;position:relative;padding:0 0 16px 38px;border-left:2px solid var(--rule);margin-left:6px;}
+  .steps li:last-child{border-left:2px solid transparent;}
+  .steps li::before{content:counter(step);position:absolute;left:-13px;top:0;width:24px;height:24px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;font-weight:700;}
+  .steps b{display:block;margin-bottom:3px;}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="rp_index.html">← IAprendizaje</a>
+  <span class="crumb">Bloque <b>IV</b> de IV</span>
+</nav>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="layout">
+  <aside>
+    <h5>Unidad 6</h5>
+    <ul>
+      <li><a href="#t6-1">6.1 Qué es "Aulas para pensar"</a></li>
+      <li><a href="#t6-2">6.2 La sesión paso a paso</a></li>
+      <li><a href="#t6-3">6.3 El problema de la semana</a></li>
+      <li><a href="#t6-4">6.4 El diario matemático</a></li>
+    </ul>
+    <h5>Unidad 7</h5>
+    <ul>
+      <li><a href="#t7-1">7.1 Por qué evaluar de otra forma</a></li>
+      <li><a href="#t7-2">7.2 Rúbrica de proceso</a></li>
+      <li><a href="#t7-3">7.3 Observación y portfolio</a></li>
+      <li><a href="#t7-4">7.4 Autoevaluación del alumno</a></li>
+    </ul>
+    <h5>Curso</h5>
+    <ul>
+      <li><a href="rp_bloque1.html">← Bloque I</a></li>
+      <li><a href="rp_bloque2.html">← Bloque II</a></li>
+      <li><a href="rp_bloque3.html">← Bloque III</a></li>
+      <li><a href="rp_taller.html">Taller práctico →</a></li>
+    </ul>
+  </aside>
+
+  <main id="top">
+    <div class="block-head">
+      <div class="eyebrow">Bloque IV · Resolución de Problemas Matemáticos</div>
+      <h1>Una propuesta de aula, y cómo <em>evaluar el pensamiento</em></h1>
+      <p>De la teoría a la rutina semanal: una propuesta completa de trabajo de aula, y un conjunto de instrumentos para evaluar la resolución de problemas sin reducirla a una nota de "bien o mal".</p>
+      <div class="tags"><span>📖 2 unidades</span><span>🏫 Propuesta de aula</span><span>📊 Evaluación</span></div>
+    </div>
+
+    <div class="tema-eyebrow">Tema 1 · Unidad 6</div>
+    <h2 id="t6-1">6.1 Qué es "Aulas para pensar"</h2>
+    <p><strong>Aulas para pensar</strong> es el nombre que damos en este curso a una rutina de aula semanal y sostenida en el tiempo, diseñada para que la resolución de problemas deje de ser una actividad puntual («el viernes hacemos problemas») y se convierta en una forma habitual de trabajar las matemáticas. No es un método cerrado ni una programación completa: es una estructura de sesión que puedes adaptar a tu grupo, tu horario y tu sentido matemático prioritario de cada momento.</p>
+
+    <div class="box definition">
+      <div class="label">Principio central</div>
+      Una "aula para pensar" dedica más tiempo a la fase de comprender y planificar (1.ª y 2.ª fase de Pólya) que a la de ejecutar, y reserva siempre un tramo final para comparar estrategias entre compañeros, no solo para corregir el resultado.
+    </div>
+
+    <h2 id="t6-2">6.2 La sesión paso a paso</h2>
+    <ol class="steps">
+      <li><b>Lectura y comprensión individual (5 min)</b>Cada alumno lee el problema en silencio y escribe o dibuja, sin ayuda, qué entiende que le piden. No se permite empezar a calcular todavía.</li>
+      <li><b>Puesta en común de la comprensión (5 min)</b>Se contrasta en gran grupo qué ha entendido cada uno. El objetivo no es resolver, sino asegurarse de que todos parten del mismo punto de partida.</li>
+      <li><b>Resolución individual o en pareja (10-15 min)</b>Cada alumno o pareja elige su estrategia y la desarrolla. El maestro circula, observa y anota (no corrige sobre la marcha).</li>
+      <li><b>Puesta en común de estrategias (10-15 min)</b>Se eligen 2-3 estrategias distintas (no necesariamente las "correctas") para que sus autores las expliquen en la pizarra. El foco está en comparar caminos, no en validar uno solo.</li>
+      <li><b>Cierre y registro (5 min)</b>Cada alumno anota en su diario matemático (ver 6.4) qué estrategia ha usado y si la cambiaría después de ver las de sus compañeros.</li>
+    </ol>
+
+    <div class="box practice">
+      <div class="label">Para tu práctica docente</div>
+      Si solo tienes 20 minutos en lugar de los 40-45 de la secuencia completa, no recortes el paso 1 (comprensión) ni el paso 4 (comparación de estrategias): son los dos momentos que más diferencian "resolver un problema" de "hacer un ejercicio con prisa".
+    </div>
+
+    <h2 id="t6-3">6.3 El problema de la semana</h2>
+    <p>Una variante muy efectiva de "Aulas para pensar" es fijar un único problema —preferiblemente abierto o de proceso (Bloque II)— que se trabaja a lo largo de toda la semana: el lunes se presenta y se da tiempo de comprensión; durante la semana, en momentos sueltos, los alumnos pueden volver a él; el viernes se cierra con la puesta en común. Esto da espacio a la incubación de ideas, algo que la sesión única de 45 minutos no permite.</p>
+
+    <div class="box activity">
+      <div class="label">Actividad de aula · Tablón del problema de la semana</div>
+      Dedica un espacio físico del aula al problema de la semana, con un sobre donde los alumnos pueden depositar anotaciones o intentos parciales en cualquier momento del día, no solo en la sesión de matemáticas. El viernes, abrid el sobre juntos antes de la puesta en común final.
+    </div>
+
+    <h2 id="t6-4">6.4 El diario matemático</h2>
+    <p>El diario matemático es un cuaderno (físico o digital) donde cada alumno registra, después de cada problema relevante, tres cosas: qué estrategia usó, si le funcionó, y qué haría distinto la próxima vez. No se corrige como un cuaderno de ejercicios: se lee para entender el proceso de pensamiento del alumno, y es una de las fuentes principales para la evaluación que se aborda en el Tema 2 de este bloque.</p>
+
+    <hr>
+
+    <div class="tema-eyebrow">Tema 2 · Unidad 7</div>
+    <h2 id="t7-1">7.1 Por qué evaluar la resolución de problemas de otra forma</h2>
+    <p>Si un problema, por definición (Bloque I), exige un camino que el alumno no domina de antemano, evaluarlo solo por el resultado final mide casi exclusivamente la suerte de haber dado con el camino correcto, no la calidad del pensamiento desplegado. Dos alumnos pueden llegar al mismo resultado erróneo por razones completamente distintas —uno por un error de cálculo en una estrategia excelente, otro por no haber entendido el enunciado— y una corrección binaria (bien/mal) los trata exactamente igual.</p>
+
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>Si el resultado es correcto, el proceso no hace falta revisarlo.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>Un resultado correcto por azar o por copia no indica comprensión. Revisar el proceso es la única forma de distinguir comprensión real de acierto casual.</div>
+    </div>
+
+    <h2 id="t7-2">7.2 Una rúbrica de proceso</h2>
+    <p>Una rúbrica útil para resolución de problemas evalúa fases, no solo el resultado. Esta es una versión de cuatro niveles, alineada con las fases de Pólya (Bloque III):</p>
+    <table>
+      <tr><th>Dimensión</th><th>Nivel 1</th><th>Nivel 2</th><th>Nivel 3</th><th>Nivel 4</th></tr>
+      <tr><td><strong>Comprensión</strong></td><td>No identifica qué se pide</td><td>Identifica la pregunta pero no todos los datos relevantes</td><td>Identifica pregunta y datos correctamente</td><td>Reformula el problema con sus propias palabras</td></tr>
+      <tr><td><strong>Estrategia</strong></td><td>No elige ninguna o es aleatoria</td><td>Elige una estrategia poco eficiente pero coherente</td><td>Elige una estrategia adecuada</td><td>Justifica por qué esa estrategia es adecuada frente a otras</td></tr>
+      <tr><td><strong>Ejecución</strong></td><td>Abandona a mitad de camino</td><td>Ejecuta con errores que no detecta</td><td>Ejecuta correctamente la estrategia elegida</td><td>Ejecuta y detecta/corrige sus propios errores</td></tr>
+      <tr><td><strong>Revisión</strong></td><td>No revisa el resultado</td><td>Revisa solo el cálculo</td><td>Revisa si el resultado tiene sentido</td><td>Propone una vía alternativa para comprobarlo</td></tr>
+    </table>
+
+    <div class="box practice">
+      <div class="label">Para tu práctica docente</div>
+      No necesitas aplicar esta rúbrica a cada problema que pongas. Resérvala para 1-2 problemas significativos al mes —idealmente el "problema de la semana" (6.3)— y úsala como evaluación formativa, comentada con el alumno, no solo como nota.
+    </div>
+
+    <h2 id="t7-3">7.3 Observación directa y portfolio</h2>
+    <p>La rúbrica recoge un producto final, pero buena parte de lo más valioso ocurre durante el proceso, en el momento en que el alumno se atasca y decide cómo seguir. Una plantilla sencilla de observación (nombre, fecha, qué heurística usó, en qué momento se bloqueó, cómo lo resolvió) registrada durante la fase de resolución individual del paso 3 de "Aulas para pensar" complementa la rúbrica con información que el producto final no muestra.</p>
+    <p>El portfolio matemático —una selección de 4-6 problemas significativos por trimestre, elegidos en parte por el propio alumno— permite ver la evolución de la estrategia a lo largo del curso, algo que una nota puntual nunca puede mostrar.</p>
+
+    <h2 id="t7-4">7.4 Autoevaluación del alumno</h2>
+    <p>Pedir al alumno que se autoevalúe con las mismas categorías de la rúbrica (comprensión, estrategia, ejecución, revisión) antes de que el maestro la complete tiene un doble efecto: desarrolla la metacognición —pensar sobre el propio pensamiento, central en cualquier sentido matemático— y, con el tiempo, hace que la autoevaluación del alumno converja con la del maestro, señal de que ha interiorizado los criterios.</p>
+
+    <blockquote>
+      Evaluar la resolución de problemas con una sola marca de "bien" o "mal" es como evaluar un viaje solo por si llegó a su destino: ignora si el camino elegido fue el más razonable con la información disponible en ese momento.
+    </blockquote>
+
+    <div class="for-you">
+      <div class="label">Para tu práctica docente</div>
+      Elige un solo problema de los próximos quince días para pilotar la rúbrica de 7.2 con tu clase. No la apliques a todo el grupo a la vez: pruébala con 5-6 alumnos de perfiles distintos y ajusta los descriptores antes de generalizarla. La rúbrica del taller (siguiente página) ya está adaptada para imprimir.
+    </div>
+
+    <hr>
+
+    <div class="biblio">
+      <h2>Bibliografía y textos de consulta</h2>
+
+      <h3>Estructura de aula y rutinas de pensamiento</h3>
+      <p class="ref"><span class="star">★</span><strong>Ritchhart, R., Church, M. y Morrison, K. (2014).</strong> <em>Hacer visible el pensamiento.</em> Paidós. Fuente de las rutinas de pensamiento aplicables a la estructura de sesión propuesta en este bloque.<span class="meta">Nivel: introductorio. En español.</span></p>
+      <p class="ref"><strong>Boaler, J. (2016).</strong> <em>Mentalidades matemáticas.</em> Narcea. Propuestas de aula sobre comparación pública de estrategias y clima de clase orientado al proceso.<span class="meta">Nivel: introductorio. En español.</span></p>
+
+      <h3>Evaluación de la resolución de problemas</h3>
+      <p class="ref"><span class="star">★</span><strong>Charles, R., Lester, F. y O'Daffer, P. (1987).</strong> <em>How to Evaluate Progress in Problem Solving.</em> NCTM. Referencia clásica sobre rúbricas analíticas de proceso en resolución de problemas, base del modelo de 7.2.<span class="meta">Nivel: intermedio. En inglés.</span></p>
+      <p class="ref"><span class="star">★</span><strong>Sanmartí, N. (2007).</strong> <em>10 ideas clave: Evaluar para aprender.</em> Graó. Marco general de evaluación formativa, con aplicación directa a la autoevaluación descrita en 7.4.<span class="meta">Nivel: introductorio. En español.</span></p>
+      <p class="ref"><strong>Junta de Castilla y León (2022).</strong> <em>Decreto 38/2022, currículo de Educación Primaria en Castilla y León.</em> BOCYL. Criterios de evaluación oficiales del área de Matemáticas por ciclo.<span class="meta">Nivel: normativo. En español.</span></p>
+    </div>
+
+    <div class="block-nav">
+      <a href="rp_bloque3.html">← Bloque III · Recursos y competencias</a>
+      <a href="rp_taller.html">Taller práctico →</a>
+    </div>
+  </main>
+</div>
+
+<script>
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    document.getElementById('progressBar').style.width = p + '%';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque I · Qué es un problema · Resolución de Problemas</title>
+<style>
+  :root{
+    --ink:#1c1a17; --paper:#f6f2ea; --rule:#d9d0bf;
+    --accent:#1f6e5c; --accent2:#a8462f; --muted:#6b6258; --card:#fffdf9;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Iowan Old Style',serif;line-height:1.65;}
+  .sans{font-family:'Helvetica Neue',Arial,sans-serif;}
+  a{color:var(--accent);}
+
+  nav.top{
+    position:sticky;top:0;z-index:30;background:rgba(246,242,234,.95);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);padding:10px 16px;font-family:'Helvetica Neue',Arial,sans-serif;
+    display:flex;justify-content:space-between;align-items:center;font-size:.78rem;
+  }
+  nav.top a{text-decoration:none;color:var(--muted);}
+  nav.top .crumb b{color:var(--ink);}
+  .progress-wrap{height:3px;background:var(--rule);position:sticky;top:39px;z-index:29;}
+  .progress-bar{height:100%;background:var(--accent2);width:0%;transition:width .1s linear;}
+
+  .layout{max-width:920px;margin:0 auto;display:flex;gap:0;align-items:flex-start;padding:0 16px;}
+  aside{
+    width:200px;flex-shrink:0;position:sticky;top:60px;
+    padding:26px 14px 26px 0;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;
+    display:none;
+  }
+  @media(min-width:760px){aside{display:block;}}
+  aside h5{text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;color:var(--accent2);margin:0 0 8px;}
+  aside ul{list-style:none;padding:0;margin:0 0 20px;}
+  aside li{margin-bottom:7px;}
+  aside a{color:var(--muted);text-decoration:none;}
+  aside a:hover{color:var(--accent);}
+
+  main{flex:1;min-width:0;padding:26px 0 70px;max-width:680px;}
+
+  .block-head{margin-bottom:28px;}
+  .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent2);font-weight:700;}
+  .block-head h1{font-size:1.7rem;margin:8px 0 12px;}
+  .block-head h1 em{color:var(--accent);font-style:italic;}
+  .block-head p{color:var(--muted);font-size:.97rem;max-width:58ch;}
+  .tags{display:flex;gap:14px;flex-wrap:wrap;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.78rem;color:var(--muted);margin-top:14px;}
+
+  h2{font-size:1.4rem;margin:40px 0 4px;}
+  h3{font-size:1.12rem;margin:26px 0 10px;color:var(--ink);}
+  h4{font-size:1rem;margin:20px 0 8px;}
+  p{margin:0 0 14px;}
+  strong{color:var(--ink);}
+
+  .box{
+    border:1px solid var(--rule);background:var(--card);
+    padding:14px 16px;margin:18px 0;border-radius:2px;
+  }
+  .box.definition{border-left:3px solid var(--accent);}
+  .box.definition .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px;}
+
+  .box.practice{background:#eef3ee;border-left:3px solid var(--accent);}
+  .box.practice .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+
+  .box.activity{background:#f1ece1;border-left:3px solid var(--accent2);}
+  .box.activity .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+
+  .myth-pair{display:flex;flex-direction:column;gap:10px;margin:18px 0;}
+  .myth{border:1px solid var(--rule);padding:12px 14px;border-radius:2px;}
+  .myth.x{background:#f7e9e5;}
+  .myth.check{background:#e8f0e9;}
+  .myth .tag{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .myth.x .tag{color:var(--accent2);}
+  .myth.check .tag{color:var(--accent);}
+
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.88rem;font-family:'Helvetica Neue',Arial,sans-serif;}
+  th,td{border:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top;}
+  th{background:#efe9db;font-weight:700;}
+
+  blockquote{font-style:italic;border-left:3px solid var(--accent2);padding-left:16px;margin:20px 0;color:var(--ink);}
+
+  .for-you{
+    background:#fbf7ee;border:1px dashed var(--accent2);padding:14px 16px;margin:24px 0;border-radius:2px;
+  }
+  .for-you .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+
+  hr{border:none;border-top:1px solid var(--rule);margin:40px 0;}
+
+  .biblio h3{margin-top:30px;}
+  .ref{margin:0 0 14px;font-size:.92rem;}
+  .ref .star{color:var(--accent2);}
+  .ref .meta{display:block;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;color:var(--muted);margin-top:3px;}
+
+  .block-nav{display:flex;justify-content:space-between;margin-top:50px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.85rem;}
+  .block-nav a{text-decoration:none;color:var(--accent2);}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="rp_index.html">← IAprendizaje</a>
+  <span class="crumb">Bloque <b>I</b> de IV</span>
+</nav>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="layout">
+  <aside>
+    <h5>Tema</h5>
+    <ul>
+      <li><a href="#t1-1">1.1 El criterio del obstáculo</a></li>
+      <li><a href="#t1-2">1.2 Problema vs. ejercicio</a></li>
+      <li><a href="#t1-3">1.3 Cuatro tipos de actividad</a></li>
+      <li><a href="#t1-4">1.4 Mitos sobre "poner problemas"</a></li>
+    </ul>
+    <h5>Curso</h5>
+    <ul>
+      <li><a href="rp_bloque2.html">Bloque II →</a></li>
+      <li><a href="rp_bloque3.html">Bloque III →</a></li>
+      <li><a href="rp_bloque4.html">Bloque IV →</a></li>
+      <li><a href="rp_taller.html">Taller práctico →</a></li>
+    </ul>
+  </aside>
+
+  <main id="top">
+    <div class="block-head">
+      <div class="eyebrow">Bloque I · Resolución de Problemas Matemáticos</div>
+      <h1>¿Qué hace que algo sea <em>un problema</em>?</h1>
+      <p>Antes de elaborar un solo enunciado hace falta resolver una pregunta previa: ¿qué distingue a un problema de un ejercicio, y por qué esa distinción cambia completamente lo que ocurre en la cabeza de un alumno?</p>
+      <div class="tags"><span>📖 1 unidad</span><span>🧩 Criterios y tipología</span><span>🎒 Enfoque de aula</span></div>
+    </div>
+
+    <h2 id="t1-1">1.1 El criterio del obstáculo</h2>
+    <p>La pregunta «¿qué es un problema?» parece trivial hasta que se intenta responder con precisión. En el lenguaje cotidiano del aula, «problema» se usa para casi cualquier enunciado con números: una suma con contexto narrativo ya se llama «problema», aunque el alumno solo tenga que identificar la operación y ejecutarla. Esa confusión tiene consecuencias: si todo es un problema, ningún alumno aprende a distinguir cuándo necesita pensar de verdad.</p>
+
+    <div class="box definition">
+      <div class="label">Definición de trabajo</div>
+      Un <strong>problema</strong> es una situación en la que el resolutor tiene un objetivo claro pero no dispone, de entrada, de un procedimiento conocido y directo para alcanzarlo. Tiene que existir un <strong>obstáculo</strong>: una distancia entre lo que el alumno sabe hacer automáticamente y lo que la situación le exige. Si esa distancia no existe —si el alumno reconoce el procedimiento al primer vistazo— no hay problema, hay ejercicio.
+    </div>
+
+    <p>Esta definición, que recoge la tradición de George Pólya y que Alan Schoenfeld precisó después, tiene una implicación incómoda para cualquier maestro: <strong>el mismo enunciado puede ser un problema para un alumno y un ejercicio para otro</strong>. No es una propiedad del papel, es una relación entre la tarea y quien la resuelve. Un cálculo de reparto que supone un problema real en 2.º de primaria es un ejercicio mecánico en 5.º, una vez automatizada la división.</p>
+
+    <p>Esto desplaza el foco de «qué enunciado pongo» a «qué sabe ya este grupo, y qué le falta por construir». La elaboración de problemas, por tanto, no puede hacerse en abstracto: necesita anclarse en el punto de desarrollo real del grupo al que va dirigida.</p>
+
+    <div class="box practice">
+      <div class="label">Para tu práctica docente</div>
+      Antes de dar un enunciado nuevo a tu clase, pregúntate: ¿hay al menos un alumno que reconocerá el procedimiento de un vistazo? Si la respuesta es «todos», no es un problema para ese grupo: es práctica de un algoritmo, y está bien que lo sea, pero no lo llames «problema» ni lo evalúes como tal.
+    </div>
+
+    <hr>
+
+    <h2 id="t1-2">1.2 Problema vs. ejercicio: la frontera difusa</h2>
+    <p>La distinción entre problema y ejercicio no es binaria sino gradual, y depende de tres factores que conviene revisar enunciado a enunciado.</p>
+
+    <table>
+      <tr><th>Factor</th><th>En el ejercicio</th><th>En el problema</th></tr>
+      <tr><td><strong>Procedimiento</strong></td><td>Conocido y disponible de inmediato</td><td>No evidente; hay que diseñarlo o adaptarlo</td></tr>
+      <tr><td><strong>Función de la tarea</strong></td><td>Consolidar un algoritmo ya enseñado</td><td>Construir o movilizar una estrategia nueva</td></tr>
+      <tr><td><strong>Carga cognitiva</strong></td><td>Baja: atención en la ejecución correcta</td><td>Alta: atención en decidir qué hacer</td></tr>
+      <tr><td><strong>Respuesta del alumno ante el bloqueo</strong></td><td>Error de cálculo o despiste</td><td>No sabe por dónde empezar</td></tr>
+    </table>
+
+    <p>Esta tabla explica también por qué los problemas «de libro de texto» fracasan con tanta frecuencia como herramienta de pensamiento: están diseñados para practicar la operación que se acaba de explicar en la página anterior. El alumno no necesita decidir nada, solo identificar la palabra clave («reparte» → dividir; «en total» → sumar) y ejecutar. Esto entrena una estrategia perversa —la lectura selectiva de palabras clave— que se rompe en cuanto el enunciado no sigue el patrón esperado.</p>
+
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>Si el alumno conoce el algoritmo necesario, el enunciado sigue siendo un «problema» porque tiene un contexto narrativo.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>El contexto narrativo no convierte un ejercicio en problema. Lo que importa es si el alumno tiene que decidir un camino o solo ejecutar uno ya conocido.</div>
+    </div>
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>Cuantos más datos numéricos tenga el enunciado, más «problema» es.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>La dificultad real no está en la cantidad de datos sino en la necesidad de decidir qué hacer con ellos. Un enunciado con un solo dato puede ser un problema genuino si el camino no es evidente.</div>
+    </div>
+
+    <hr>
+
+    <h2 id="t1-3">1.3 Cuatro tipos de actividad matemática</h2>
+    <p>Una clase de matemáticas sana necesita los cuatro tipos de actividad, no solo problemas. Confundirlos —o usar siempre el mismo— empobrece tanto la práctica como el pensamiento.</p>
+
+    <table>
+      <tr><th>Tipo</th><th>Objetivo</th><th>Ejemplo</th><th>Cuándo usarlo</th></tr>
+      <tr><td><strong>Ejercicio</strong></td><td>Automatizar un procedimiento ya enseñado</td><td>20 sumas con llevadas tras explicar el algoritmo</td><td>Justo después de introducir una técnica nueva</td></tr>
+      <tr><td><strong>Problema de aplicación</strong></td><td>Transferir un procedimiento conocido a un contexto nuevo</td><td>Calcular el cambio en una compra con varios productos</td><td>Cuando el procedimiento ya está consolidado y hace falta practicar la decisión de cuándo usarlo</td></tr>
+      <tr><td><strong>Exploración</strong></td><td>Descubrir una regularidad o relación sin un objetivo cerrado previo</td><td>«¿Qué pasa si sumas dos números impares? ¿Y tres?»</td><td>Para introducir un concepto antes de formalizarlo</td></tr>
+      <tr><td><strong>Investigación</strong></td><td>Plantear y resolver una pregunta propia, con un proceso abierto y sostenido en el tiempo</td><td>«¿Cuál es la forma más eficiente de organizar el patio para que quepan todos los juegos del recreo?»</td><td>Como proyecto, con varias sesiones y producto final</td></tr>
+    </table>
+
+    <p>La exploración y la investigación suelen confundirse porque ambas son abiertas, pero se diferencian en el grado de cierre: la exploración busca que el alumno note un patrón concreto que el maestro ya tiene en mente (aunque no se lo diga); la investigación parte de una pregunta genuina, donde ni el camino ni necesariamente la respuesta están predeterminados, y puede no tener una única solución correcta.</p>
+
+    <div class="box activity">
+      <div class="label">Actividad de aula · Diagnóstico rápido</div>
+      Coge las últimas cinco tareas de matemáticas que has puesto a tu clase esta semana. Clasifícalas en la tabla anterior. Si las cinco caen en «ejercicio» o «problema de aplicación», tu aula necesita más exploración e investigación. Si las cinco son abiertas, probablemente tus alumnos necesiten más práctica de automatización antes de poder explorar con soltura.
+    </div>
+
+    <hr>
+
+    <h2 id="t1-4">1.4 Mitos sobre «poner problemas» en el aula</h2>
+
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>Un buen problema es el que tiene truco o complica el enunciado.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>La dificultad artificial (enunciados enrevesados, datos irrelevantes a propósito) no mide pensamiento matemático, mide comprensión lectora bajo presión. Un buen problema es claro en el enunciado y exigente en el camino, no al revés.</div>
+    </div>
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>Si un alumno no resuelve el problema, es que no «se le dan bien» las matemáticas.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>El bloqueo ante un problema suele indicar falta de estrategias heurísticas (no saber cómo empezar), no falta de capacidad. Eso se enseña explícitamente, como se verá en el Bloque III.</div>
+    </div>
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>Cuantos más problemas se resuelvan, mejor se aprende a resolver problemas.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>La cantidad sin variedad de tipo (Bloque II) ni reflexión sobre el proceso (Bloque IV) genera alumnos que reconocen patrones de enunciado, no que piensan matemáticamente.</div>
+    </div>
+
+    <blockquote>
+      Un problema deja de serlo en el momento en que el alumno ya sabe exactamente qué pasos dar. Hasta ese momento es un problema; a partir de ahí, es un ejercicio con otro nombre.
+    </blockquote>
+
+    <div class="for-you">
+      <div class="label">Para tu práctica docente</div>
+      La próxima vez que un alumno se quede parado ante un enunciado y te diga «no sé qué hacer», resiste el impulso de decirle la operación. Pregúntale primero: «¿qué sabes ya?» y «¿qué te están preguntando?». Ese momento de parálisis es, exactamente, el problema funcionando como problema. Resolvérselo tú lo convierte en ejercicio.
+    </div>
+
+    <hr class="biblio-divider">
+
+    <div class="biblio">
+      <h2>Bibliografía y textos de consulta</h2>
+      <p>Referencias seleccionadas para profundizar en los criterios de este bloque. Las marcadas con ★ son el punto de partida más recomendado.</p>
+
+      <h3>Fundamentos de la resolución de problemas</h3>
+      <p class="ref"><span class="star">★</span><strong>Pólya, G. (1945/1965).</strong> <em>Cómo plantear y resolver problemas.</em> Trillas. La obra fundacional del campo. Introduce el criterio del obstáculo y la heurística en cuatro fases. Lectura imprescindible y muy accesible pese a su antigüedad.<span class="meta">Nivel: introductorio. Disponible en español.</span></p>
+      <p class="ref"><span class="star">★</span><strong>Schoenfeld, A. H. (1985).</strong> <em>Mathematical Problem Solving.</em> Academic Press. Precisa y amplía el marco de Pólya incorporando metacognición y creencias del resolutor. Referencia académica central del campo.<span class="meta">Nivel: intermedio-avanzado. En inglés.</span></p>
+      <p class="ref"><strong>Puig, L. y Cerdán, F. (1988).</strong> <em>Problemas aritméticos escolares.</em> Síntesis. Análisis detallado de la estructura de los problemas escolares en español, con tipología muy aplicable al aula de primaria.<span class="meta">Nivel: intermedio. En español.</span></p>
+
+      <h3>Tipos de tareas matemáticas</h3>
+      <p class="ref"><span class="star">★</span><strong>NCTM (2014).</strong> <em>Principles to Actions: Ensuring Mathematical Success for All.</em> National Council of Teachers of Mathematics. Distingue con claridad entre tareas de bajo y alto nivel de demanda cognitiva. Muy útil para auditar las tareas propias.<span class="meta">Nivel: introductorio-intermedio. En inglés, hay resúmenes en español.</span></p>
+      <p class="ref"><strong>Stein, M. K., Smith, M. S., Henningsen, M. A. y Silver, E. A. (2009).</strong> <em>Implementing Standards-Based Mathematics Instruction.</em> Teachers College Press. Marco de análisis de tareas matemáticas según su demanda cognitiva real, no aparente.<span class="meta">Nivel: avanzado. En inglés.</span></p>
+
+      <h3>Contexto curricular español</h3>
+      <p class="ref"><span class="star">★</span><strong>Ministerio de Educación y Formación Profesional (2022).</strong> <em>Real Decreto 157/2022, currículo de Educación Primaria.</em> BOE. Introduce oficialmente los «sentidos matemáticos» y distingue tipos de situaciones de aprendizaje. Lectura imprescindible para contextualizar este curso.<span class="meta">Nivel: normativo. En español.</span></p>
+    </div>
+
+    <div class="block-nav">
+      <span></span>
+      <a href="rp_bloque2.html">Bloque II · Tipos de problemas y sentidos →</a>
+    </div>
+  </main>
+</div>
+
+<script>
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    document.getElementById('progressBar').style.width = p + '%';
+  });
+</script>
+</body>
+</html>

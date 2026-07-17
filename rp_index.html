@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resolución de Problemas Matemáticos · Un curso para enseñar a pensar · IAprendizaje</title>
+<style>
+  :root{
+    --ink:#1c1a17;
+    --paper:#f6f2ea;
+    --rule:#d9d0bf;
+    --accent:#1f6e5c;
+    --accent2:#a8462f;
+    --muted:#6b6258;
+    --card:#fffdf9;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Georgia,'Iowan Old Style',serif;
+    line-height:1.6;
+  }
+  .sans{font-family:'Helvetica Neue',Arial,sans-serif;}
+  a{color:inherit;}
+  nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(246,242,234,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+    padding:12px 18px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'Helvetica Neue',Arial,sans-serif;
+  }
+  nav .brand{font-weight:700;font-size:.95rem;letter-spacing:.02em;}
+  nav .links{display:flex;gap:14px;font-size:.78rem;flex-wrap:wrap;}
+  nav .links a{text-decoration:none;color:var(--muted);border-bottom:1px solid transparent;}
+  nav .links a:hover{color:var(--accent);border-color:var(--accent);}
+
+  .hero{padding:48px 18px 28px;max-width:760px;margin:0 auto;}
+  .eyebrow{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    text-transform:uppercase;letter-spacing:.12em;font-size:11px;
+    color:var(--accent2);font-weight:700;
+  }
+  h1{font-size:2rem;line-height:1.15;margin:10px 0 14px;}
+  h1 em{font-style:italic;color:var(--accent);}
+  .hero p.lead{color:var(--muted);font-size:1.02rem;max-width:58ch;}
+
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+    max-width:760px;margin:30px auto;padding:0 18px;
+    font-family:'Helvetica Neue',Arial,sans-serif;
+  }
+  .stats div{text-align:center;border-left:1px solid var(--rule);padding-left:10px;}
+  .stats div:first-child{border-left:none;}
+  .stats b{display:block;font-size:1.6rem;color:var(--accent);font-family:Georgia,serif;}
+  .stats span{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+
+  .cloud{
+    max-width:760px;margin:24px auto;padding:18px 18px;
+    text-align:center;font-family:'Helvetica Neue',Arial,sans-serif;
+    color:var(--muted);font-size:.85rem;line-height:2.2;
+  }
+  .cloud b{color:var(--ink);font-size:1rem;}
+  .cloud .ax{color:var(--accent);font-weight:700;}
+
+  section{max-width:760px;margin:0 auto;padding:34px 18px;}
+  .section-label{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    text-transform:uppercase;letter-spacing:.1em;font-size:11px;
+    color:var(--accent2);font-weight:700;margin-bottom:6px;
+  }
+  h2{font-size:1.4rem;margin:0 0 18px;}
+
+  .blocks{display:flex;flex-direction:column;gap:14px;}
+  .block-card{
+    display:block;text-decoration:none;color:var(--ink);
+    border:1px solid var(--rule);background:var(--card);
+    border-radius:2px;padding:18px 20px;
+    transition:border-color .15s ease;
+  }
+  .block-card:hover{border-color:var(--accent);}
+  .block-card .num{
+    font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;
+    color:var(--accent2);letter-spacing:.08em;text-transform:uppercase;
+  }
+  .block-card h3{margin:6px 0 8px;font-size:1.2rem;}
+  .block-card p{margin:0 0 10px;color:var(--muted);font-size:.92rem;}
+  .block-card .foot{
+    font-family:'Helvetica Neue',Arial,sans-serif;font-size:.74rem;
+    color:var(--muted);display:flex;gap:14px;
+  }
+  .block-card.taller{border-color:var(--accent);background:#f1ece1;}
+  .block-card.taller .num{color:var(--accent);}
+
+  .method-grid{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(min-width:600px){.method-grid{grid-template-columns:1fr 1fr;}}
+  .method-item{padding:14px 0;border-top:1px solid var(--rule);}
+  .method-item .icon{font-size:1.3rem;}
+  .method-item h4{margin:6px 0 4px;font-size:1rem;}
+  .method-item p{margin:0;color:var(--muted);font-size:.88rem;}
+
+  blockquote{
+    font-size:1.15rem;font-style:italic;line-height:1.5;
+    border-left:3px solid var(--accent2);padding-left:18px;margin:0;
+    color:var(--ink);
+  }
+  blockquote cite{display:block;margin-top:10px;font-style:normal;font-size:.78rem;
+    color:var(--muted);font-family:'Helvetica Neue',Arial,sans-serif;}
+
+  .audience{display:flex;flex-direction:column;gap:14px;}
+  .aud-item{display:flex;gap:12px;}
+  .aud-item .icon{font-size:1.3rem;flex-shrink:0;}
+  .aud-item h4{margin:0 0 4px;font-size:1rem;}
+  .aud-item p{margin:0;color:var(--muted);font-size:.88rem;}
+
+  footer{
+    max-width:760px;margin:0 auto;padding:30px 18px 60px;
+    border-top:1px solid var(--rule);
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    font-size:.82rem;color:var(--muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  footer a{color:var(--accent2);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">IAprendizaje</div>
+  <div class="links">
+    <a href="rp_bloque1.html">Bloque 1</a>
+    <a href="rp_bloque2.html">Bloque 2</a>
+    <a href="rp_bloque3.html">Bloque 3</a>
+    <a href="rp_bloque4.html">Bloque 4</a>
+    <a href="rp_taller.html">Taller</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">IAprendizaje · Curso de formación propia</div>
+  <h1>Resolución de problemas: <em>enseñar a pensar, no a repetir</em></h1>
+  <p class="lead">No es una colección de problemas para fotocopiar. Es un curso para entender qué hace que un problema sea un problema, qué sentidos matemáticos se ponen en juego al resolverlo, qué recursos lo sostienen en el aula y cómo evaluarlo sin reducirlo a "bien o mal".</p>
+</div>
+
+<div class="stats">
+  <div><b>4</b><span>Bloques</span></div>
+  <div><b>7</b><span>Unidades</span></div>
+  <div><b>40</b><span>Preguntas test</span></div>
+  <div><b>18</b><span>Fichas de aula</span></div>
+</div>
+
+<div class="cloud">
+  <b>Problema</b> <span class="ax">·</span> Ejercicio <span class="ax">·</span> <b>Sentido numérico</b> <span class="ax">·</span> Heurísticas <span class="ax">·</span> <b>Sentido espacial</b> <span class="ax">·</span> Polya <span class="ax">·</span> <b>Socioafectivo</b> <span class="ax">·</span> Manipulativos <span class="ax">·</span> <b>Investigación</b> <span class="ax">·</span> Rúbricas <span class="ax">·</span> <b>Aulas para pensar</b> <span class="ax">·</span> Competencias
+</div>
+
+<section>
+  <div class="section-label">Contenidos</div>
+  <h2>Cuatro bloques, un taller de aula</h2>
+  <div class="blocks">
+
+    <a class="block-card" href="rp_bloque1.html">
+      <div class="num">Bloque I</div>
+      <h3>Qué es un problema</h3>
+      <p>Dónde está la frontera entre ejercicio y problema, y los cuatro tipos de actividad matemática que conviven en tu aula: ejercicio, aplicación, exploración e investigación.</p>
+      <div class="foot"><span>1 unidad</span><span>Criterios y tipología</span></div>
+    </a>
+
+    <a class="block-card" href="rp_bloque2.html">
+      <div class="num">Bloque II</div>
+      <h3>Tipos de problemas y sentidos matemáticos</h3>
+      <p>Una taxonomía útil de problemas (rutinarios, no rutinarios, abiertos, de proceso...) y los seis sentidos matemáticos del currículo: numérico, de la medida, espacial, algebraico, estocástico y socioafectivo.</p>
+      <div class="foot"><span>2 unidades</span><span>Taxonomía + sentidos</span></div>
+    </a>
+
+    <a class="block-card" href="rp_bloque3.html">
+      <div class="num">Bloque III</div>
+      <h3>Recursos, competencias y habilidades</h3>
+      <p>Del material manipulativo a la herramienta digital, y de la heurística de Polya a las competencias clave: qué se moviliza realmente cuando un alumno resuelve un problema.</p>
+      <div class="foot"><span>2 unidades</span><span>Recursos + competencias</span></div>
+    </a>
+
+    <a class="block-card" href="rp_bloque4.html">
+      <div class="num">Bloque IV</div>
+      <h3>Aulas para pensar y evaluación</h3>
+      <p>Una propuesta de trabajo de aula completa, y cómo construir instrumentos de evaluación que valoren el proceso de pensar, no solo el resultado final.</p>
+      <div class="foot"><span>2 unidades</span><span>Propuesta + evaluación</span></div>
+    </a>
+
+    <a class="block-card taller" href="rp_taller.html">
+      <div class="num">Taller práctico</div>
+      <h3>Banco de problemas por ciclo y sentido</h3>
+      <p>18 fichas de problema listas para usar, filtrables por ciclo (1º-2º, 3º-4º, 5º-6º) y por sentido matemático, más la autoevaluación final del curso (40 preguntas con feedback razonado).</p>
+      <div class="foot"><span>18 fichas</span><span>Test final del curso</span></div>
+    </a>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Metodología</div>
+  <h2>Cómo está construido el curso</h2>
+  <div class="method-grid">
+    <div class="method-item">
+      <div class="icon">📖</div>
+      <h4>Lectura con profundidad, no con urgencia</h4>
+      <p>Cada bloque está escrito para pensarlo, no para escanearlo. Sin listas vacías ni resúmenes superficiales.</p>
+    </div>
+    <div class="method-item">
+      <div class="icon">🏫</div>
+      <h4>Anclado en el aula de primaria</h4>
+      <p>Cada idea tiene una caja "Para tu práctica docente" o una actividad concreta que puedes probar mañana.</p>
+    </div>
+    <div class="method-item">
+      <div class="icon">🧩</div>
+      <h4>Un taller con problemas reales</h4>
+      <p>El curso no termina en teoría: el bloque-taller te da fichas de problema ya filtradas por ciclo y sentido matemático.</p>
+    </div>
+    <div class="method-item">
+      <div class="icon">📝</div>
+      <h4>Autoevaluación final con feedback real</h4>
+      <p>40 preguntas al cierre del curso, con explicación razonada de cada opción: correcta y por qué, incorrecta y por qué.</p>
+    </div>
+    <div class="method-item">
+      <div class="icon">⚖️</div>
+      <h4>Base en evidencia, no en opinión</h4>
+      <p>Las afirmaciones sobre resolución de problemas están respaldadas por investigación citada (Polya, Schoenfeld, NCTM, LOMLOE).</p>
+    </div>
+    <div class="method-item">
+      <div class="icon">🗂️</div>
+      <h4>Tu ritmo, tu orden</h4>
+      <p>No hay plazos. Cada bloque es autocontenido; puedes empezar por el taller si lo necesitas para mañana.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Una idea central</div>
+  <blockquote>
+    Un problema deja de serlo en el momento en que el alumno ya sabe exactamente qué pasos dar. Hasta ese momento es un problema; a partir de ahí, es un ejercicio con otro nombre.
+    <cite>— Bloque I</cite>
+  </blockquote>
+</section>
+
+<section>
+  <div class="section-label">Para quién es este curso</div>
+  <h2>Pensado para el maestro que pone problemas cada semana</h2>
+  <div class="audience">
+    <div class="aud-item">
+      <div class="icon">🧑‍🏫</div>
+      <div>
+        <h4>Maestros de Educación Primaria</h4>
+        <p>El perfil principal. Todo el contenido está anclado en la realidad del aula: ejemplos, fichas filtrables por ciclo y conexión directa con los sentidos matemáticos del currículo LOMLOE.</p>
+      </div>
+    </div>
+    <div class="aud-item">
+      <div class="icon">🧭</div>
+      <div>
+        <h4>Coordinadores de ciclo y equipos de matemáticas</h4>
+        <p>El Bloque IV (Aulas para pensar y evaluación) y el taller son especialmente útiles para acordar criterios comunes de evaluación en el centro.</p>
+      </div>
+    </div>
+    <div class="aud-item">
+      <div class="icon">📐</div>
+      <div>
+        <h4>Maestros que quieren ir más allá del libro de texto</h4>
+        <p>Si sientes que "poner problemas" se ha quedado en repetir el mismo enunciado con números distintos, el Bloque II te da una taxonomía real para variar de verdad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>IAprendizaje · Luis Ángel González Ortega</span>
+  <a href="https://iaprendizaje.vercel.app">iaprendizaje.vercel.app</a>
+</footer>
+
+</body>
+</html>

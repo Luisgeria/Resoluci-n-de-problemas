@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque III · Recursos, competencias y habilidades</title>
+<style>
+  :root{--ink:#1c1a17;--paper:#f6f2ea;--rule:#d9d0bf;--accent:#1f6e5c;--accent2:#a8462f;--muted:#6b6258;--card:#fffdf9;}
+  *{box-sizing:border-box;} html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Iowan Old Style',serif;line-height:1.65;}
+  .sans{font-family:'Helvetica Neue',Arial,sans-serif;}
+  a{color:var(--accent);}
+  nav.top{position:sticky;top:0;z-index:30;background:rgba(246,242,234,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);padding:10px 16px;font-family:'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;}
+  nav.top a{text-decoration:none;color:var(--muted);}
+  nav.top .crumb b{color:var(--ink);}
+  .progress-wrap{height:3px;background:var(--rule);position:sticky;top:39px;z-index:29;}
+  .progress-bar{height:100%;background:var(--accent2);width:0%;transition:width .1s linear;}
+  .layout{max-width:920px;margin:0 auto;display:flex;gap:0;align-items:flex-start;padding:0 16px;}
+  aside{width:200px;flex-shrink:0;position:sticky;top:60px;padding:26px 14px 26px 0;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;display:none;}
+  @media(min-width:760px){aside{display:block;}}
+  aside h5{text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;color:var(--accent2);margin:0 0 8px;}
+  aside ul{list-style:none;padding:0;margin:0 0 20px;}
+  aside li{margin-bottom:7px;}
+  aside a{color:var(--muted);text-decoration:none;}
+  aside a:hover{color:var(--accent);}
+  main{flex:1;min-width:0;padding:26px 0 70px;max-width:680px;}
+  .block-head{margin-bottom:28px;}
+  .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent2);font-weight:700;}
+  .block-head h1{font-size:1.7rem;margin:8px 0 12px;}
+  .block-head h1 em{color:var(--accent);font-style:italic;}
+  .block-head p{color:var(--muted);font-size:.97rem;max-width:58ch;}
+  .tags{display:flex;gap:14px;flex-wrap:wrap;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.78rem;color:var(--muted);margin-top:14px;}
+  .tema-eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent);font-weight:700;margin-top:46px;}
+  h2{font-size:1.4rem;margin:6px 0 4px;}
+  h3{font-size:1.12rem;margin:26px 0 10px;color:var(--ink);}
+  h4{font-size:1rem;margin:20px 0 8px;}
+  p{margin:0 0 14px;}
+  strong{color:var(--ink);}
+  .box{border:1px solid var(--rule);background:var(--card);padding:14px 16px;margin:18px 0;border-radius:2px;}
+  .box.definition{border-left:3px solid var(--accent);}
+  .box.definition .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px;}
+  .box.practice{background:#eef3ee;border-left:3px solid var(--accent);}
+  .box.practice .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .box.activity{background:#f1ece1;border-left:3px solid var(--accent2);}
+  .box.activity .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+  .myth-pair{display:flex;flex-direction:column;gap:10px;margin:18px 0;}
+  .myth{border:1px solid var(--rule);padding:12px 14px;border-radius:2px;}
+  .myth.x{background:#f7e9e5;} .myth.check{background:#e8f0e9;}
+  .myth .tag{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .myth.x .tag{color:var(--accent2);} .myth.check .tag{color:var(--accent);}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.85rem;font-family:'Helvetica Neue',Arial,sans-serif;}
+  th,td{border:1px solid var(--rule);padding:7px 9px;text-align:left;vertical-align:top;}
+  th{background:#efe9db;font-weight:700;}
+  blockquote{font-style:italic;border-left:3px solid var(--accent2);padding-left:16px;margin:20px 0;color:var(--ink);}
+  .for-you{background:#fbf7ee;border:1px dashed var(--accent2);padding:14px 16px;margin:24px 0;border-radius:2px;}
+  .for-you .label{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;color:var(--accent2);margin-bottom:6px;}
+  hr{border:none;border-top:1px solid var(--rule);margin:40px 0;}
+  .biblio h3{margin-top:30px;}
+  .ref{margin:0 0 14px;font-size:.92rem;}
+  .ref .star{color:var(--accent2);}
+  .ref .meta{display:block;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;color:var(--muted);margin-top:3px;}
+  .block-nav{display:flex;justify-content:space-between;margin-top:50px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.85rem;}
+  .block-nav a{text-decoration:none;color:var(--accent2);}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="rp_index.html">← IAprendizaje</a>
+  <span class="crumb">Bloque <b>III</b> de IV</span>
+</nav>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="layout">
+  <aside>
+    <h5>Unidad 4</h5>
+    <ul>
+      <li><a href="#t4-1">4.1 Por qué importan los recursos</a></li>
+      <li><a href="#t4-2">4.2 Recursos manipulativos</a></li>
+      <li><a href="#t4-3">4.3 Recursos digitales</a></li>
+      <li><a href="#t4-4">4.4 Cuándo retirar el material</a></li>
+    </ul>
+    <h5>Unidad 5</h5>
+    <ul>
+      <li><a href="#t5-1">5.1 Las cuatro fases de Pólya</a></li>
+      <li><a href="#t5-2">5.2 Heurísticas concretas</a></li>
+      <li><a href="#t5-3">5.3 Competencias clave en juego</a></li>
+      <li><a href="#t5-4">5.4 Habilidades de pensamiento crítico</a></li>
+    </ul>
+    <h5>Curso</h5>
+    <ul>
+      <li><a href="rp_bloque1.html">← Bloque I</a></li>
+      <li><a href="rp_bloque2.html">← Bloque II</a></li>
+      <li><a href="rp_bloque4.html">Bloque IV →</a></li>
+      <li><a href="rp_taller.html">Taller práctico →</a></li>
+    </ul>
+  </aside>
+
+  <main id="top">
+    <div class="block-head">
+      <div class="eyebrow">Bloque III · Resolución de Problemas Matemáticos</div>
+      <h1>De la regleta a la heurística: qué sostiene <em>el pensamiento</em></h1>
+      <p>Un buen problema necesita apoyos para pensar —materiales, estrategias, lenguaje— y moviliza competencias que van mucho más allá del cálculo. Este bloque recorre ambos: los recursos que sostienen la resolución y las competencias que esta desarrolla.</p>
+      <div class="tags"><span>📖 2 unidades</span><span>🧰 Recursos</span><span>🧠 Competencias</span></div>
+    </div>
+
+    <div class="tema-eyebrow">Tema 1 · Unidad 4</div>
+    <h2 id="t4-1">4.1 Por qué importan los recursos</h2>
+    <p>Resolver un problema implica, casi siempre, representarlo de alguna forma externa al pensamiento puro: con dedos, con dibujos, con material manipulativo, con una tabla. Esta representación externa no es una muleta para alumnos «flojos»: es la forma en que el pensamiento matemático se hace visible, manipulable y, por tanto, corregible. Negar el acceso a representaciones externas no acelera el pensamiento abstracto, lo bloquea.</p>
+
+    <h2 id="t4-2">4.2 Recursos manipulativos</h2>
+    <table>
+      <tr><th>Material</th><th>Sentido que apoya</th><th>Uso típico en problemas</th></tr>
+      <tr><td><strong>Regletas Cuisenaire</strong></td><td>Numérico, algebraico</td><td>Descomposición, relaciones parte-todo, ecuaciones visuales</td></tr>
+      <tr><td><strong>Material base 10 / ábaco</strong></td><td>Numérico</td><td>Problemas de reparto, agrupamiento, valor posicional</td></tr>
+      <tr><td><strong>Geoplano</strong></td><td>Espacial, de la medida</td><td>Problemas de área, perímetro, simetría</td></tr>
+      <tr><td><strong>Balanza de dos platillos</strong></td><td>Algebraico</td><td>Problemas de equivalencia e igualdad</td></tr>
+      <tr><td><strong>Bloques lógicos / tangram</strong></td><td>Espacial, estocástico</td><td>Problemas de clasificación, combinatoria visual</td></tr>
+      <tr><td><strong>Dados y dinero de juguete</strong></td><td>Estocástico, de la medida</td><td>Problemas de probabilidad y manejo monetario</td></tr>
+    </table>
+
+    <div class="box practice">
+      <div class="label">Para tu práctica docente</div>
+      Antes de explicar cómo resolver un problema nuevo, pregunta: «¿con qué material de los que tenemos en clase podríamos representar esto?». Dejar que sea el alumno quien elija el recurso, en lugar de imponerlo tú, es ya parte de la resolución del problema, no un paso previo a ella.
+    </div>
+
+    <h2 id="t4-3">4.3 Recursos digitales</h2>
+    <p>Los recursos digitales no sustituyen a los manipulativos: los complementan, especialmente cuando permiten manipular relaciones que serían difíciles de construir con material físico (cambiar una variable y ver el efecto inmediato en una representación gráfica, por ejemplo).</p>
+    <table>
+      <tr><th>Herramienta</th><th>Para qué sirve en resolución de problemas</th></tr>
+      <tr><td><strong>GeoGebra</strong></td><td>Construcción y manipulación dinámica de figuras geométricas; visualizar problemas de medida y espacio</td></tr>
+      <tr><td><strong>Hojas de cálculo sencillas</strong></td><td>Organizar datos en problemas de proceso, ver patrones en tablas generadas automáticamente</td></tr>
+      <tr><td><strong>Apps de pizarra colaborativa</strong></td><td>Comparar estrategias distintas de varios alumnos en tiempo real durante la puesta en común</td></tr>
+      <tr><td><strong>Generadores de problemas con IA</strong></td><td>Crear variantes de un mismo problema ajustadas al nivel real de cada grupo (ver nota normativa más abajo)</td></tr>
+    </table>
+
+    <div class="myth-pair">
+      <div class="myth x"><span class="tag">✗ Mito</span>Cuanto más tecnología, mejor se resuelven los problemas.</div>
+      <div class="myth check"><span class="tag">✓ Realidad</span>El recurso digital ayuda cuando hace visible una relación difícil de ver de otra forma. Si solo automatiza el cálculo, elimina precisamente la parte del proceso que el problema pretendía entrenar.</div>
+    </div>
+
+    <h2 id="t4-4">4.4 Cuándo retirar el material</h2>
+    <p>El objetivo del material manipulativo no es usarlo siempre, sino dejar de necesitarlo cuando la representación mental ya está consolidada. La retirada debe ser progresiva y decidida por la observación del alumno, no por el calendario: algunos alumnos necesitarán las regletas hasta bien entrado el segundo ciclo para ciertos conceptos, y eso no es un retraso, es el ritmo real de construcción de ese concepto concreto.</p>
+
+    <hr>
+
+    <div class="tema-eyebrow">Tema 2 · Unidad 5</div>
+    <h2 id="t5-1">5.1 Las cuatro fases de Pólya</h2>
+    <p>El modelo heurístico más influyente sigue siendo el de George Pólya, organizado en cuatro fases que conviene enseñar de forma explícita, no asumir que el alumno las descubre solo.</p>
+    <table>
+      <tr><th>Fase</th><th>Pregunta que la guía</th><th>Qué falla si se salta</th></tr>
+      <tr><td><strong>1. Comprender el problema</strong></td><td>¿Qué me piden? ¿Qué datos tengo?</td><td>Errores por mala lectura, no por mal cálculo</td></tr>
+      <tr><td><strong>2. Concebir un plan</strong></td><td>¿Qué estrategia puedo usar? ¿Me recuerda a otro problema?</td><td>El alumno empieza a calcular sin saber hacia dónde va</td></tr>
+      <tr><td><strong>3. Ejecutar el plan</strong></td><td>¿Estoy siguiendo los pasos que decidí?</td><td>Se pierde el hilo a mitad de camino</td></tr>
+      <tr><td><strong>4. Revisar</strong></td><td>¿Tiene sentido el resultado? ¿Hay otra forma de comprobarlo?</td><td>Errores absurdos pasan sin detectarse (p. ej. una edad de 300 años)</td></tr>
+    </table>
+    <p>La fase más sistemáticamente saltada en el aula de primaria es la cuarta. Habituar a los alumnos a preguntarse «¿tiene sentido esta respuesta?» antes de darla por buena es una de las intervenciones más rentables y menos costosas que existen.</p>
+
+    <div class="box practice">
+      <div class="label">Para tu práctica docente</div>
+      Pide explícitamente, al final de cada problema, una frase de revisión: «esto tiene sentido porque…» o «esto no puede ser, porque…». No es un paso opcional ni decorativo: es la fase 4 de Pólya hecha hábito.
+    </div>
+
+    <h2 id="t5-2">5.2 Heurísticas concretas para enseñar</h2>
+    <ul style="padding-left:20px;margin:0 0 14px;">
+      <li style="margin-bottom:8px;"><strong>Hacer un dibujo o esquema:</strong> traducir el enunciado a una representación visual antes de operar.</li>
+      <li style="margin-bottom:8px;"><strong>Buscar un patrón:</strong> probar con números más pequeños y observar qué se repite.</li>
+      <li style="margin-bottom:8px;"><strong>Ensayo y error organizado:</strong> probar, registrar el resultado, ajustar de forma sistemática (no al azar).</li>
+      <li style="margin-bottom:8px;"><strong>Resolver un problema más simple:</strong> reducir los números o las condiciones para ver la estructura antes de volver al problema original.</li>
+      <li style="margin-bottom:8px;"><strong>Trabajar hacia atrás:</strong> partir del resultado conocido y deshacer los pasos.</li>
+    </ul>
+
+    <div class="box activity">
+      <div class="label">Actividad de aula · Banco de heurísticas visible</div>
+      Crea un panel de aula con las cinco heurísticas anteriores, cada una con un icono. Cuando un alumno se atasca, en lugar de darle la solución, pregúntale: «¿cuál de estas estrategias del panel podrías probar?». Con el tiempo, el alumno interioriza el repertorio y deja de necesitar el panel.
+    </div>
+
+    <h2 id="t5-3">5.3 Competencias clave que se movilizan</h2>
+    <p>La resolución de problemas no es solo competencia matemática (STEM) en sentido estricto. Moviliza también competencia en comunicación lingüística (justificar el razonamiento por escrito u oralmente), competencia digital (cuando se usan herramientas), competencia personal y social (trabajo cooperativo, gestión del desacuerdo) y competencia ciudadana (cuando el problema tiene un contexto real de toma de decisiones, como el reparto justo de un recurso).</p>
+
+    <h2 id="t5-4">5.4 Habilidades de pensamiento crítico</h2>
+    <p>Resolver problemas matemáticos entrena habilidades de pensamiento crítico que trascienden la asignatura: detectar cuándo falta información, distinguir datos relevantes de irrelevantes, cuestionar la plausibilidad de una respuesta y comparar la eficiencia de distintas estrategias para un mismo fin. Hacer explícita esta transferencia —nombrarla en voz alta en el aula— ayuda a que el alumno la reconozca también fuera de la clase de matemáticas.</p>
+
+    <blockquote>
+      No enseñamos heurísticas para que el alumno resuelva mejor un problema concreto, sino para que tenga algo que hacer la próxima vez que no sepa qué hacer.
+    </blockquote>
+
+    <div class="for-you">
+      <div class="label">Para tu práctica docente</div>
+      Haz una lista de los recursos manipulativos y digitales que ya tienes disponibles en tu aula o centro. Para cada uno, anota a qué sentido matemático (Bloque II) y a qué fase de Pólya podría ayudar. Es probable que descubras que tienes más recursos de los que usas activamente para resolución de problemas.
+    </div>
+
+    <hr>
+
+    <div class="biblio">
+      <h2>Bibliografía y textos de consulta</h2>
+
+      <h3>Heurística y estrategias</h3>
+      <p class="ref"><span class="star">★</span><strong>Pólya, G. (1945/1965).</strong> <em>Cómo plantear y resolver problemas.</em> Trillas. Fuente original de las cuatro fases y de buena parte de las heurísticas concretas de este bloque.<span class="meta">Nivel: introductorio. En español.</span></p>
+      <p class="ref"><span class="star">★</span><strong>Mason, J., Burton, L. y Stacey, K. (1988).</strong> <em>Pensar matemáticamente.</em> Labor/MEC. Desarrollo práctico de heurísticas con ejemplos trabajados paso a paso, muy útil para diseñar actividades.<span class="meta">Nivel: intermedio. En español.</span></p>
+
+      <h3>Materiales manipulativos</h3>
+      <p class="ref"><span class="star">★</span><strong>Alsina, Á. (2019).</strong> <em>Itinerarios didácticos para la enseñanza de las matemáticas (6-12 años).</em> Graó. Guía práctica sobre el uso de materiales manipulativos por sentido matemático y ciclo.<span class="meta">Nivel: introductorio. En español.</span></p>
+      <p class="ref"><strong>Fuson, K. C. (2003).</strong> <em>Toward computational fluency in multidigit multiplication and division.</em> Teaching Children Mathematics, 9(6), 300-305. Sobre el papel del material de base 10 en la construcción del valor posicional.<span class="meta">Nivel: académico. En inglés.</span></p>
+
+      <h3>Competencias y currículo</h3>
+      <p class="ref"><span class="star">★</span><strong>Ministerio de Educación y Formación Profesional (2022).</strong> <em>Real Decreto 157/2022, currículo de Educación Primaria.</em> BOE. Define las competencias específicas del área de Matemáticas y su relación con las competencias clave.<span class="meta">Nivel: normativo. En español.</span></p>
+      <p class="ref"><strong>NCTM (2000).</strong> <em>Principles and Standards for School Mathematics.</em> National Council of Teachers of Mathematics. Marco de referencia internacional sobre procesos matemáticos, incluyendo resolución de problemas como proceso transversal.<span class="meta">Nivel: intermedio. En inglés.</span></p>
+    </div>
+
+    <div class="block-nav">
+      <a href="rp_bloque2.html">← Bloque II · Tipos de problemas y sentidos</a>
+      <a href="rp_bloque4.html">Bloque IV · Aulas para pensar y evaluación →</a>
+    </div>
+  </main>
+</div>
+
+<script>
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    document.getElementById('progressBar').style.width = p + '%';
+  });
+</script>
+</body>
+</html>
